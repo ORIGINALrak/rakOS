@@ -13,13 +13,32 @@ body{
     align-items: center;
     padding: 0 20px;
     button{
+        display:flex;
         width: 40px;
         height: 40px;
-        div{
-            margin: 2px;
-            background-color: red;
+        padding: 0;
+        background-color: rgb(44, 37, 37);
+        border: 0;
+        cursor: pointer;
+        table{
+            
+            margin: auto;
+            height: 100%;
+            width: 100%;
+            td{
+                border: 1px black solid;
+                background-color: blue;
+            }
         }
     }
+    button:hover{
+       
+        background-color:  rgb(49, 50, 40);
+    }
+    button:active{
+       opacity: 0.8;
+    }
+    
 
 }
 .table{
@@ -28,4 +47,9 @@ body{
     grid-template-rows: repeat(10,1fr);
     height: 93vh;
     width: 100vw;
+}
+.menuOpen{
+    background-color: rgb(151, 66, 231);
+    grid-row: 4/11;
+    grid-column: 1/4;
 }
