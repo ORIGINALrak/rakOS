@@ -17,8 +17,8 @@ function filemenutext(){
 
 function notepad() {
     var fileElement = document.getElementById("mentes");
-        fileElement.style.display = "block";
-        fileElement.style.position = "absolute";
+        fileElement.style.display = "flex";
+
     if(document.getElementById("nev").value == ""){
         
     }
