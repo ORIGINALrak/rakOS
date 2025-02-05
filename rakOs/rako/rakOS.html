@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,22 +13,11 @@
     </button>
   </div>
   <section id="body">
-    <div class="table"  style="position: relative;" id="table">
-      <div class="draggable" style="left: 50px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""></div>
-    <div class="draggable" style="left: 200px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""></div>
-    <div class="draggable" style="left: 350px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""></div>
-      <div class="menuClose" id="menuClose">
-
-        <div style="display: flex;align-items: center;flex-direction: column;">
-          <button class="turnOff" onclick="turnOff()"><img src="src/tornonsvg.svg" alt=""></button>
-          <p id="turnOfflabel" style="display: none;">Kikapcsolás</p>
-        </div>
-        <div style="display: flex;align-items: center;flex-direction: column;">
-          <button class="turnOff" onclick="logout()"><img src="src/tornonsvg.svg" alt=""></button>
-          <p id="logoutlabel" style="display: none;">Kijelentkezés</p>
-        </div>
-
-      </div>
+    <div class="table" style="position: relative;" id="table">
+      <div class="draggable icon" style="left: 50px;" id="icon1"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""></div>
+      <div class="draggable icon" style="left: 200px;" id="icon2"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""></div>
+      <div class="draggable icon" style="left: 350px;" id="icon3"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""></div>
+      <div class="draggable" style="left: 500px;" id="trashcan"><img src="src/trash-can-with-cover-from-side-view.svg" width="100%" height="100%" alt=""></div>
     </div>
     <div class="tray" id="tray">
       <button onclick="menuShow()">
@@ -45,56 +33,67 @@
         </table>
       </button>
       <div class="timestamps">
-        <span id="time">
-        </span>
+        <span id="time"></span>
         <span id="date"></span>
       </div>
     </div>
   </section>
-  <script src="app.js">
-  </script>
+  <script src="app.js"></script>
+  <script src="collision.js"></script>
   <script type="module">
- const container = document.getElementById("table");
-const draggables = document.querySelectorAll(".draggable");
+    const container = document.getElementById("table");
+    const draggables = document.querySelectorAll(".draggable");
 
-draggables.forEach(draggable => {
-    draggable.addEventListener("mousedown", (event) => {
-        let shiftX = event.clientX - draggable.getBoundingClientRect().left;
-        let shiftY = event.clientY - draggable.getBoundingClientRect().top;
+    draggables.forEach(draggable => {
+        draggable.addEventListener("mousedown", (event) => {
+            let shiftX = event.clientX - draggable.getBoundingClientRect().left;
+            let shiftY = event.clientY - draggable.getBoundingClientRect().top;
 
-        const moveAt = (pageX, pageY) => {
-            let newX = pageX - shiftX;
-            let newY = pageY - shiftY;
+            const moveAt = (pageX, pageY) => {
+                let newX = pageX - shiftX;
+                let newY = pageY - shiftY;
 
-            // Ensure the draggable stays within the container
-            if (newX < 0) newX = 0;
-            if (newY < 0) newY = 0;
-            if (newX + draggable.offsetWidth > container.offsetWidth) newX = container.offsetWidth - draggable.offsetWidth;
-            if (newY + draggable.offsetHeight > container.offsetHeight) newY = container.offsetHeight - draggable.offsetHeight;
+                if (newX < 0) newX = 0;
+                if (newY < 0) newY = 0;
+                if (newX + draggable.offsetWidth > container.offsetWidth) newX = container.offsetWidth - draggable.offsetWidth;
+                if (newY + draggable.offsetHeight > container.offsetHeight) newY = container.offsetHeight - draggable.offsetHeight;
 
-            draggable.style.left = newX + "px";
-            draggable.style.top = newY + "px";
-        }
+                draggable.style.left = newX + "px";
+                draggable.style.top = newY + "px";
+            }
 
-        const onMouseMove = (event) => {
-            moveAt(event.pageX, event.pageY);
-        }
+            const onMouseMove = (event) => {
+                moveAt(event.pageX, event.pageY);
+                checkCollisionOnDrag(draggable); // Check collision while dragging
+            }
 
-        document.addEventListener("mousemove", onMouseMove);
+            document.addEventListener("mousemove", onMouseMove);
 
-        draggable.addEventListener("mouseup", () => {
-            document.removeEventListener("mousemove", onMouseMove);
+            draggable.addEventListener("mouseup", () => {
+                document.removeEventListener("mousemove", onMouseMove);
+            });
+
+            draggable.ondragstart = () => {
+                return false;
+            };
         });
-
-        draggable.ondragstart = () => {
-            return false; // Prevent the default drag-and-drop behavior
-        };
     });
-});
 
+    function areColliding(div1, div2) {
+        const rect1 = div1.getBoundingClientRect();
+        const rect2 = div2.getBoundingClientRect();
+        return !(rect1.right < rect2.left || 
+                 rect1.left > rect2.right || 
+                 rect1.bottom < rect2.top || 
+                 rect1.top > rect2.bottom);
+    }
 
-
+    function checkCollisionOnDrag(draggable) {
+        const trashcan = document.getElementById('trashcan');
+        if (draggable !== trashcan && areColliding(draggable, trashcan)) {
+            console.log("Colliding divs:", draggable.id, trashcan.id);
+        }
+    }
   </script>
 </body>
-
 </html>

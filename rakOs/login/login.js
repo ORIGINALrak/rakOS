@@ -31,3 +31,9 @@ function loginn() {
         document.getElementById("error").innerHTML = "Invalid username or password";
     }
 }
+
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Enter') {
+    loginn();
+  }
+});
