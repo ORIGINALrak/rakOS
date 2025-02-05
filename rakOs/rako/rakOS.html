@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>rakOS</title>
+  <link rel="stylesheet" href="rakOS.css">
+</head>
+<body id="fobody" onload="timeDisplay()">
+  <div class="turnOn" id="turnOn">
+    <button class="turnOnbtn" id="turnOnbtn" onclick="turnOn()">
+      <img style="margin: 0;width: 100%;height: 100%;" src="src/tornonsvg.svg" alt=""></button>
+    </button>
+  </div>
+  <section id="body">
+    <div class="table"  style="position: relative;" id="table">
+      <div class="draggable" style="left: 50px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""></div>
+    <div class="draggable" style="left: 200px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""></div>
+    <div class="draggable" style="left: 350px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""></div>
+      <div class="menuClose" id="menuClose">
+
+        <div style="display: flex;align-items: center;flex-direction: column;">
+          <button class="turnOff" onclick="turnOff()"><img src="src/tornonsvg.svg" alt=""></button>
+          <p id="turnOfflabel" style="display: none;">Kikapcsolás</p>
+        </div>
+        <div style="display: flex;align-items: center;flex-direction: column;">
+          <button class="turnOff" onclick="logout()"><img src="src/tornonsvg.svg" alt=""></button>
+          <p id="logoutlabel" style="display: none;">Kijelentkezés</p>
+        </div>
+
+      </div>
+    </div>
+    <div class="tray" id="tray">
+      <button onclick="menuShow()">
+        <table>
+          <tr>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </button>
+      <div class="timestamps">
+        <span id="time">
+        </span>
+        <span id="date"></span>
+      </div>
+    </div>
+  </section>
+  <script src="app.js">
+  </script>
+  <script type="module">
+ const container = document.getElementById("table");
+const draggables = document.querySelectorAll(".draggable");
+
+draggables.forEach(draggable => {
+    draggable.addEventListener("mousedown", (event) => {
+        let shiftX = event.clientX - draggable.getBoundingClientRect().left;
+        let shiftY = event.clientY - draggable.getBoundingClientRect().top;
+
+        const moveAt = (pageX, pageY) => {
+            let newX = pageX - shiftX;
+            let newY = pageY - shiftY;
+
+            // Ensure the draggable stays within the container
+            if (newX < 0) newX = 0;
+            if (newY < 0) newY = 0;
+            if (newX + draggable.offsetWidth > container.offsetWidth) newX = container.offsetWidth - draggable.offsetWidth;
+            if (newY + draggable.offsetHeight > container.offsetHeight) newY = container.offsetHeight - draggable.offsetHeight;
+
+            draggable.style.left = newX + "px";
+            draggable.style.top = newY + "px";
+        }
+
+        const onMouseMove = (event) => {
+            moveAt(event.pageX, event.pageY);
+        }
+
+        document.addEventListener("mousemove", onMouseMove);
+
+        draggable.addEventListener("mouseup", () => {
+            document.removeEventListener("mousemove", onMouseMove);
+        });
+
+        draggable.ondragstart = () => {
+            return false; // Prevent the default drag-and-drop behavior
+        };
+    });
+});
+
+
+
+  </script>
+</body>
+
+</html>
