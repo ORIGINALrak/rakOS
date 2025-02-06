@@ -60,10 +60,59 @@ function iconRename(){
     folder.value = folderVal;
     console.log(folderVal);
 }
-function newIcon(){
-    let 
-}
+
 function openfolder(){
     console.log("openfolder");
     document.getElementById("folderopened").style.display = "block";
+}
+
+let dragEl;
+let dragHandleEl
+const lastPosition = {};
+
+setupResizable();
+setupDraggable();
+
+function setupDraggable(){
+  dragHandleEl = document.querySelector('[data-drag-handle]');
+  dragHandleEl.addEventListener('mousedown', dragStart);
+  dragHandleEl.addEventListener('mouseup', dragEnd);    
+  dragHandleEl.addEventListener('mouseout', dragEnd);
+}
+
+function setupResizable(){
+  const resizeEl = document.querySelector('[data-resizable]');
+  resizeEl.style.setProperty('resize', 'both');
+  resizeEl.style.setProperty('overflow','hidden');
+}
+
+function dragStart(event){
+  dragEl = getDraggableAncestor(event.target);
+  dragEl.style.setProperty('position','absolute');
+  lastPosition.left = event.target.clientX;
+  lastPosition.top = event.target.clientY;
+  dragHandleEl.classList.add('dragging');
+  dragHandleEl.addEventListener('mousemove', dragMove);
+}
+
+function dragMove(event){
+  const dragElRect = dragEl.getBoundingClientRect();
+  const newLeft = dragElRect.left + event.clientX - lastPosition.left;
+  const newTop = dragElRect.top + event.clientY - lastPosition.top;
+  dragEl.style.setProperty('left', `${newLeft}px`);
+  dragEl.style.setProperty('top', `${newTop}px`);
+  lastPosition.left = event.clientX;
+  lastPosition.top = event.clientY;
+  window.getSelection().removeAllRanges();
+}
+
+function getDraggableAncestor(element){
+  if (element.getAttribute('data-draggable')) return element;
+  return getDraggableAncestor(element.parentElement);
+}
+
+function dragEnd(){
+  dragHandleEl.classList.remove('dragging');
+  dragHandleEl.removeEventListener('mousemove',dragMove);
+  dragEl = null;
 }

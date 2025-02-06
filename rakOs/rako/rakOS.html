@@ -15,7 +15,7 @@
   </div>
   <section id="body">
     <div class="table"  style="position: relative;" id="table">
-      <div onclick="openfolder()" class="draggable" style="left: 50px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""><input onchange="iconRename()" id="folder1" class="iconName" type="text" value="folder1"></div>
+      <div ondblclick="openfolder()" class="draggable" style="left: 50px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""><input onchange="iconRename()" id="folder1" class="iconName" type="text" value="folder1"></div>
     <div class="draggable" style="left: 200px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""><input onchange="iconRename()" id="folder1" class="iconName" type="text" value="folder1"></div>
     <div class="draggable" style="left: 350px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""><input onchange="iconRename()" id="folder1" class="iconName" type="text" value="folder1"></div>
     <div id="contextMenu" class="context-menu" style="display:none">
@@ -24,9 +24,13 @@
           
       </ul>
   </div>  
-  <div id="folderopened" class="folderopened">
-    <p class="forlder_name">Folder name</p>
+
+  <div data-draggable="true" data-resizable="true" id="folderopened" class="drag-handle box">
+    <div class="drag-handle" data-drag-handle="true" class="forlder_name">
+      <p class="forlder_name">Folder name</p>
+    </div>
     <hr>
+    <div class="box-body">
     <p class="folder_item">Folder item</p>
     <p class="folder_item">Folder item</p>
     <p class="folder_item">Folder item</p>
@@ -34,6 +38,7 @@
     <p class="folder_item">Folder item</p>
     <p class="folder_item">Folder item</p>
     <p class="folder_item">Folder item</p>
+  </div>
   </div>
     <div class="menuClose" id="menuClose">
 
