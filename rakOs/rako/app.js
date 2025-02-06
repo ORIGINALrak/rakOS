@@ -54,3 +54,16 @@ async function turnOn() {
     var menuCloseElement = document.getElementById("menuClose");
     menuCloseElement.classList.remove("menuOpen");
 }
+function iconRename(){
+    let folderVal = document.getElementById("folder1").value;
+    let folder = document.getElementById("folder1");
+    folder.value = folderVal;
+    console.log(folderVal);
+}
+function newIcon(){
+    let 
+}
+function openfolder(){
+    console.log("openfolder");
+    document.getElementById("folderopened").style.display = "block";
+}

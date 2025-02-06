@@ -15,10 +15,27 @@
   </div>
   <section id="body">
     <div class="table"  style="position: relative;" id="table">
-      <div class="draggable" style="left: 50px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""></div>
-    <div class="draggable" style="left: 200px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""></div>
-    <div class="draggable" style="left: 350px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""></div>
-      <div class="menuClose" id="menuClose">
+      <div onclick="openfolder()" class="draggable" style="left: 50px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""><input onchange="iconRename()" id="folder1" class="iconName" type="text" value="folder1"></div>
+    <div class="draggable" style="left: 200px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""><input onchange="iconRename()" id="folder1" class="iconName" type="text" value="folder1"></div>
+    <div class="draggable" style="left: 350px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""><input onchange="iconRename()" id="folder1" class="iconName" type="text" value="folder1"></div>
+    <div id="contextMenu" class="context-menu" style="display:none">
+      <ul>
+          <li><a onclick="newIcon()" href="#">New icon</a></li>
+          
+      </ul>
+  </div>  
+  <div id="folderopened" class="folderopened">
+    <p class="forlder_name">Folder name</p>
+    <hr>
+    <p class="folder_item">Folder item</p>
+    <p class="folder_item">Folder item</p>
+    <p class="folder_item">Folder item</p>
+    <p class="folder_item">Folder item</p>
+    <p class="folder_item">Folder item</p>
+    <p class="folder_item">Folder item</p>
+    <p class="folder_item">Folder item</p>
+  </div>
+    <div class="menuClose" id="menuClose">
 
         <div style="display: flex;align-items: center;flex-direction: column;">
           <button class="turnOff" onclick="turnOff()"><img src="src/tornonsvg.svg" alt=""></button>
@@ -93,7 +110,29 @@ draggables.forEach(draggable => {
 });
 
 
+document.onclick = hideMenu;
+        document.oncontextmenu = rightClick;
 
+        function hideMenu() {
+            document.getElementById(
+                "contextMenu").style.display = "none"
+        }
+
+        function rightClick(e) {
+            e.preventDefault();
+
+            if (document.getElementById(
+                "contextMenu").style.display == "block")
+                hideMenu();
+            else {
+                let menu = document
+                    .getElementById("contextMenu")
+
+                menu.style.display = 'block';
+                menu.style.left = e.pageX + "px";
+                menu.style.top = e.pageY + "px";
+            }
+        }
   </script>
 </body>
 
