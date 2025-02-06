@@ -14,9 +14,9 @@
   </div>
   <section id="body">
     <div class="table" style="position: relative;" id="table">
-      <div class="draggable icon" style="left: 50px;" id="icon1"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""></div>
-      <div class="draggable icon" style="left: 200px;" id="icon2"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""></div>
-      <div class="draggable icon" style="left: 350px;" id="icon3"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""></div>
+      <div class="draggable icon" style="left: 50px;" id="folder1"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""></div>
+      <div class="draggable icon" style="left: 200px;" id="folder2"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""></div>
+      <div class="draggable icon" style="left: 350px;" id="folder3"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt=""></div>
       <div class="draggable" style="left: 500px;" id="trashcan"><img src="src/trash-can-with-cover-from-side-view.svg" width="100%" height="100%" alt=""></div>
     </div>
     <div class="tray" id="tray">
@@ -40,60 +40,5 @@
   </section>
   <script src="app.js"></script>
   <script src="collision.js"></script>
-  <script type="module">
-    const container = document.getElementById("table");
-    const draggables = document.querySelectorAll(".draggable");
-
-    draggables.forEach(draggable => {
-        draggable.addEventListener("mousedown", (event) => {
-            let shiftX = event.clientX - draggable.getBoundingClientRect().left;
-            let shiftY = event.clientY - draggable.getBoundingClientRect().top;
-
-            const moveAt = (pageX, pageY) => {
-                let newX = pageX - shiftX;
-                let newY = pageY - shiftY;
-
-                if (newX < 0) newX = 0;
-                if (newY < 0) newY = 0;
-                if (newX + draggable.offsetWidth > container.offsetWidth) newX = container.offsetWidth - draggable.offsetWidth;
-                if (newY + draggable.offsetHeight > container.offsetHeight) newY = container.offsetHeight - draggable.offsetHeight;
-
-                draggable.style.left = newX + "px";
-                draggable.style.top = newY + "px";
-            }
-
-            const onMouseMove = (event) => {
-                moveAt(event.pageX, event.pageY);
-                checkCollisionOnDrag(draggable); // Check collision while dragging
-            }
-
-            document.addEventListener("mousemove", onMouseMove);
-
-            draggable.addEventListener("mouseup", () => {
-                document.removeEventListener("mousemove", onMouseMove);
-            });
-
-            draggable.ondragstart = () => {
-                return false;
-            };
-        });
-    });
-
-    function areColliding(div1, div2) {
-        const rect1 = div1.getBoundingClientRect();
-        const rect2 = div2.getBoundingClientRect();
-        return !(rect1.right < rect2.left || 
-                 rect1.left > rect2.right || 
-                 rect1.bottom < rect2.top || 
-                 rect1.top > rect2.bottom);
-    }
-
-    function checkCollisionOnDrag(draggable) {
-        const trashcan = document.getElementById('trashcan');
-        if (draggable !== trashcan && areColliding(draggable, trashcan)) {
-            console.log("Colliding divs:", draggable.id, trashcan.id);
-        }
-    }
-  </script>
 </body>
 </html>
