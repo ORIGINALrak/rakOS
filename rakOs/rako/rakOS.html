@@ -20,7 +20,7 @@
       <div class="table" style="position: relative;" id="table">
         <div class="draggable"  id="trashcan"><img src="src/trash-can-with-cover-from-side-view.svg"
           width="100%" height="100%" alt=""></div>
-        <div onclick="openfolder()" class="draggable" style="left: 200px;"><img src="src/folder-svgrepo-com.svg"
+        <div ondblclick="openfolder()" class="draggable" style="left: 200px;"><img src="src/folder-svgrepo-com.svg"
             width="100%" height="100%" alt=""><input onchange="iconRename()" id="folder1" class="iconName" type="text"
             value="folder1"></div>
         <div class="draggable" style="left: 350px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%"
@@ -70,6 +70,7 @@
             </tr>
           </table>
         </button>
+        
         <div class="timestamps">
           <span id="time"></span>
           <span id="date"></span>
