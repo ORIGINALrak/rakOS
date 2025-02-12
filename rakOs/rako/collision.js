@@ -1,111 +1,112 @@
 const container = document.getElementById("table");
-    const draggables = document.querySelectorAll(".draggable");
+const draggables = document.querySelectorAll(".draggable");
 
-    var deleteItem = false;
-    var colliding = false;
-    var item1;
+var deleteItem = false;
+var colliding = false;
+var item1;
 
-    var startPosX;
-    var startPosY;
+var startPosX;
+var startPosY;
 
-    draggables.forEach(draggable => {
-        draggable.addEventListener("mousedown", (event) => {
-            item1 = draggable;
-            
-            let shiftX = event.clientX - draggable.getBoundingClientRect().left;
-            let shiftY = event.clientY - draggable.getBoundingClientRect().top;
 
-            const moveAt = (pageX, pageY) => {
-                let newX = pageX - shiftX;
-                let newY = pageY - shiftY;
+draggables.forEach(draggable => {
+  draggable.addEventListener("mousedown", (event) => {
+    item1 = draggable;
 
-                if (newX < 0) newX = 0;
-                if (newY < 0) newY = 0;
-                if (newX + draggable.offsetWidth > container.offsetWidth) newX = container.offsetWidth - draggable.offsetWidth;
-                if (newY + draggable.offsetHeight > container.offsetHeight) newY = container.offsetHeight - draggable.offsetHeight;
+    let shiftX = event.clientX - draggable.getBoundingClientRect().left;
+    let shiftY = event.clientY - draggable.getBoundingClientRect().top;
 
-                draggable.style.left = newX + "px";
-                draggable.style.top = newY + "px";
+    const moveAt = (pageX, pageY) => {
+      let newX = pageX - shiftX;
+      let newY = pageY - shiftY;
 
-                draggable.style.zIndex = "999";
+      if (newX < 0) newX = 0;
+      if (newY < 0) newY = 0;
+      if (newX + draggable.offsetWidth > container.offsetWidth) newX = container.offsetWidth - draggable.offsetWidth;
+      if (newY + draggable.offsetHeight > container.offsetHeight) newY = container.offsetHeight - draggable.offsetHeight;
 
-                // console.log(draggable.id)
-            }
+      draggable.style.left = newX + "px";
+      draggable.style.top = newY + "px";
 
-            startPosX = draggable.style.left;
-            startPosY = draggable.style.top;
+      draggable.style.zIndex = "999";
 
-            const onMouseMove = (event) => {
-                moveAt(event.pageX, event.pageY);
-                checkCollisionOnDrag(draggable); // Check collision while dragging
-            }
+      // console.log(draggable.id)
+    }
 
-            document.addEventListener("mousemove", onMouseMove);
+    startPosX = draggable.style.left;
+    startPosY = draggable.style.top;
 
-            draggable.addEventListener("mouseup", () => {
-                document.removeEventListener("mousemove", onMouseMove);
-                CheckDelete();
-                CheckCollide();
-                draggable.style.zIndex = "1";
-            });
+    const onMouseMove = (event) => {
+      moveAt(event.pageX, event.pageY);
+      checkCollisionOnDrag(draggable); // Check collision while dragging
+    }
 
-            draggable.ondragstart = () => {
-                return false;
-            };
-        });
+    document.addEventListener("mousemove", onMouseMove);
+
+    draggable.addEventListener("mouseup", () => {
+      document.removeEventListener("mousemove", onMouseMove);
+      CheckDelete();
+      CheckCollide();
+      draggable.style.zIndex = "1";
     });
 
-    function areColliding(div1, div2) {
-        const rect1 = div1.getBoundingClientRect();
-        const rect2 = div2.getBoundingClientRect();
+    draggable.ondragstart = () => {
+      return false;
+    };
+  });
+});
 
-        if (div1 === div2){
-          return false;
-        }
+function areColliding(div1, div2) {
+  const rect1 = div1.getBoundingClientRect();
+  const rect2 = div2.getBoundingClientRect();
 
-        return !(rect1.right < rect2.left || 
-                 rect1.left > rect2.right || 
-                 rect1.bottom < rect2.top || 
-                 rect1.top > rect2.bottom);
-    }
+  if (div1 === div2) {
+    return false;
+  }
 
-    function checkCollisionOnDrag(draggable) {
-        const elements = document.getElementsByClassName('draggable');
+  return !(rect1.right < rect2.left ||
+    rect1.left > rect2.right ||
+    rect1.bottom < rect2.top ||
+    rect1.top > rect2.bottom);
+}
 
-        for (let i = 0; i < elements.length; i++) {
-            const element = elements[i];
-            
-            if (areColliding(draggable, element)) {
-              colliding = true;
-              
-              if (element.id === "trashcan") {
-                deleteItem = true;
-              }
-              
-              break;
-            }
-          
-            deleteItem = false;
-            colliding = false;
-          }
+function checkCollisionOnDrag(draggable) {
+  const elements = document.getElementsByClassName('draggable');
 
-        console.log(deleteItem);
-        console.log(colliding);
-    }
+  for (let i = 0; i < elements.length; i++) {
+    const element = elements[i];
 
-    function CheckDelete(){
-      if (deleteItem){
-        item1.remove();
+    if (areColliding(draggable, element)) {
+      colliding = true;
 
-        deleteItem = false;
+      if (element.id === "trashcan") {
+        deleteItem = true;
       }
+
+      break;
     }
 
-    function CheckCollide(){
-      if (colliding){
-        item1.style.left = startPosX;
-        item1.style.top = startPosY;
+    deleteItem = false;
+    colliding = false;
+  }
 
-        colliding = false;
-      }
-    }
+  console.log(deleteItem);
+  console.log(colliding);
+}
+
+function CheckDelete() {
+  if (deleteItem) {
+    item1.remove();
+
+    deleteItem = false;
+  }
+}
+
+function CheckCollide() {
+  if (colliding) {
+    item1.style.left = startPosX;
+    item1.style.top = startPosY;
+
+    colliding = false;
+  }
+}
