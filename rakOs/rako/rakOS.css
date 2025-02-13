@@ -55,13 +55,10 @@ body {
   cursor: move;
   top: 50px;
   left: 50px;
-<<<<<<< Updated upstream
-=======
   align-items: center;
   justify-content: center;
   user-select: none;
   flex-direction: column;
->>>>>>> Stashed changes
 }
 .table .draggable input {
   text-align: center;
@@ -172,20 +169,15 @@ body {
 
 .context-menu ul li:hover {
   background: darkgray;
-<<<<<<< Updated upstream
-}/*# sourceMappingURL=rakOS.css.map */
-=======
 }/*# sourceMappingURL=rakOS.css.map */
 .folderopened {
   background-color: rgb(44, 37, 37) !important;
   width: 30vw !important;
   height: 60vh !important;
   position: absolute !important;
-  top: 50% !important;
-  right: 0 !important;
-  transform: translate(0, -50%) ;
   color: white ;
   display: none ;
+  z-index: 1000;
 }
 
 .folder_item{
@@ -194,6 +186,7 @@ body {
   padding-top: 10px;
   height: 20px;
   display: flex;
+  top: 0;
 }
 .folder_item:hover{
   background-color: rgb(83, 83, 214);
@@ -202,4 +195,3 @@ body {
 .forlder_name{
   margin-left: 15px;
 }
->>>>>>> Stashed changes

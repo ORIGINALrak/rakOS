@@ -77,7 +77,8 @@ function newIcon() {
 
     div.classList.add("draggable");
     const lastPosition = getLastDraggablePosition();
-    div.style = `left:${lastPosition + 150}px;z-index:1;`;
+    div.style = `left:${lastPosition + 150}px;top:50px;z-index:1;`;
+    div.ondblclick = openfolder;
 
     img.style = "width:100%;height:100%;";
     img.src = "src/folder-svgrepo-com.svg";
@@ -99,6 +100,7 @@ function newIcon() {
             const moveAt = (pageX, pageY) => {
                 let newX = pageX - shiftX;
                 let newY = pageY - shiftY;
+
 
                 if (newX < 0) newX = 0;
                 if (newY < 0) newY = 0;
@@ -137,9 +139,20 @@ function newIcon() {
     });
 }
 
-function openfolder() {/*
-    console.log("openfolder");
-    document.getElementById("folderopened").style.display = "block";*/
+function openfolder() {
+    let mousePosition;
+    if(this.style != undefined){
+        mousePosition = {
+            clientX: this.style.left,
+            clientY: this.style.top
+        };
+    }else{
+        mousePosition = {
+            clientX: this.item1.style.left,
+            clientY: this.item1.style.top
+        };
+    }
+    document.getElementById("folderopened").style.display = "block"
     let tray = document.querySelector(".trayIcons");
     tray.style = "display:flex;flex-direction:row;";
     let icondiv = document.createElement("div");
@@ -147,6 +160,9 @@ function openfolder() {/*
     iconimg.src = "src/folder-svgrepo-com.svg";
     iconimg.style = "width:100%;height:100%;background-color:red;";
     icondiv.style = "width:50px;height:50px;";
+    const folderopened = document.getElementById("folderopened");
+    folderopened.style.top =parseInt(mousePosition.clientY.split("px")[0])+100+"px";
+    folderopened.style.left = mousePosition.clientX;
     icondiv.appendChild(iconimg);
     tray.appendChild(icondiv);
 }   
