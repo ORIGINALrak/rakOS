@@ -63,10 +63,7 @@ body {
       cursor: move;
       top: 50px;
       left: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
+      
       input{
         text-align: center;
         width: 100px;
@@ -76,9 +73,15 @@ body {
       }
     }
 }
-
-    
-    
+.draggableItems{
+    display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+}
+.trayIcons{
+    padding-left: 40px;
+}    
 
 .menuClose {
     

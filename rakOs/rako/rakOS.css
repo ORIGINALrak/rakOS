@@ -55,17 +55,23 @@ body {
   cursor: move;
   top: 50px;
   left: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
-  flex-direction: column;
 }
 .table .draggable input {
   text-align: center;
   width: 100px;
   background-color: transparent;
   border: 0;
+}
+
+.draggableItems {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.trayIcons {
+  padding-left: 40px;
 }
 
 .menuClose button {
@@ -160,29 +166,3 @@ body {
 .context-menu ul li:hover {
   background: darkgray;
 }/*# sourceMappingURL=rakOS.css.map */
-.folderopened {
-  background-color: rgb(44, 37, 37);
-  width: 30vw;
-  height: 60vh;
-  position: absolute;
-  top: 50%;
-  margin: 0px 0px 0px 1200px;
-  transform: translate(0, -50%);
-  color: white;
-  display: none;
-}
-
-.folder_item{
-  margin: 0;
-  padding: 5px;
-  padding-top: 10px;
-  height: 20px;
-  display: flex;
-}
-.folder_item:hover{
-  background-color: rgb(83, 83, 214);
-}
-
-.forlder_name{
-  margin-left: 15px;
-}

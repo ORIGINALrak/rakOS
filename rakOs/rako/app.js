@@ -137,7 +137,16 @@ function newIcon() {
     });
 }
 
-function openfolder() {
+function openfolder() {/*
     console.log("openfolder");
-    document.getElementById("folderopened").style.display = "block";
+    document.getElementById("folderopened").style.display = "block";*/
+    let tray = document.querySelector(".trayIcons");
+    tray.style = "display:flex;flex-direction:row;";
+    let icondiv = document.createElement("div");
+    let iconimg = document.createElement("img");
+    iconimg.src = "src/folder-svgrepo-com.svg";
+    iconimg.style = "width:100%;height:100%;background-color:red;";
+    icondiv.style = "width:50px;height:50px;";
+    icondiv.appendChild(iconimg);
+    tray.appendChild(icondiv);
 }   
