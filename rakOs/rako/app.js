@@ -1,3 +1,4 @@
+let idoz = 3;
 function timeDisplay() {
     const date = new Date();
     const year = date.getFullYear();
@@ -70,11 +71,13 @@ function getLastDraggablePosition() {
 }
 
 function newIcon() {
+    idoz++;
     var table = document.querySelector("#table");
     let div = document.createElement('div');
     let img = document.createElement('img');
     let input = document.createElement('input');
 
+    div.id = "folder" + idoz;
     div.classList.add("draggable");
     const lastPosition = getLastDraggablePosition();
     div.style = `left:${lastPosition + 150}px;top:50px;z-index:1;`;
@@ -84,7 +87,7 @@ function newIcon() {
     img.src = "src/folder-svgrepo-com.svg";
 
     input.classList.add("iconName");
-    input.value = "nevezd el";
+    input.value = "folder" + idoz;
     input.onchange = iconRename;
 
     div.appendChild(img);
@@ -139,20 +142,41 @@ function newIcon() {
     });
 }
 
-function openfolder() {
+async function openfolder() {
+    if (!document.querySelector(".table .folderopened" + this.id)) {
+        var folder = document.createElement("div");
+        folder.id = "folderopened" + this.id;
+        folder.classList.add("folderopened");
+        folder.classList.add("draggable");
+        table.appendChild(folder);
+        var foldername = document.createElement("div");
+        foldername.id = "foldername";
+        foldername.classList.add("forlder_name");
+        folder.appendChild(foldername);
+        foldername.appendChild(document.createElement("p"));
+        foldername.children[0].innerText = "Folder name";
+        folder.appendChild(document.createElement("hr"));
+        var folderitems = document.createElement("div");
+        folder.appendChild(folderitems);
+        for (let i = 0; i < 5; i++) {
+            folderitems.appendChild(document.createElement("p"));
+            folderitems.children[i].innerText = "Folder item " + i;
+            folderitems.classList.add("folder_item");
+        }
+    }
+
     let mousePosition;
-    if(this.style != undefined){
+    if (this.style != undefined) {
         mousePosition = {
             clientX: this.style.left,
             clientY: this.style.top
         };
-    }else{
+    } else {
         mousePosition = {
             clientX: this.item1.style.left,
             clientY: this.item1.style.top
         };
     }
-    document.getElementById("folderopened").style.display = "block"
     let tray = document.querySelector(".trayIcons");
     tray.style = "display:flex;flex-direction:row;";
     let icondiv = document.createElement("div");
@@ -160,9 +184,9 @@ function openfolder() {
     iconimg.src = "src/folder-svgrepo-com.svg";
     iconimg.style = "width:100%;height:100%;background-color:red;";
     icondiv.style = "width:50px;height:50px;";
-    const folderopened = document.getElementById("folderopened");
-    folderopened.style.top =parseInt(mousePosition.clientY.split("px")[0])+100+"px";
+    const folderopened = document.getElementById("folderopened" + this.id);
+    folderopened.style.top = parseInt(mousePosition.clientY.split("px")[0]) + 100 + "px";
     folderopened.style.left = mousePosition.clientX;
     icondiv.appendChild(iconimg);
     tray.appendChild(icondiv);
-}   
+}

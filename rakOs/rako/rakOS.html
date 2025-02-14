@@ -15,7 +15,7 @@
   </div>
   <section id="body">
       <div class="table" style="position: relative;" id="table">
-        <div id="folderopened" class="folderopened draggable">
+        <!-- <div id="folderopened" class="folderopened draggable">
           <div class="forlder_name">
           <p>Folder name</p>
           </div>
@@ -27,20 +27,17 @@
           <p class="folder_item">Folder item</p>
           <p class="folder_item">Folder item</p>
           <p class="folder_item">Folder item</p>
-        </div>
-        <div class="draggable"  id="trashcan"><img src="src/trash-can-with-cover-from-side-view.svg"
+        </div> -->
+        <div  class="draggable"  id="trashcan"><img src="src/trash-can-with-cover-from-side-view.svg"
           width="100%" height="100%" alt=""></div>
-        <div ondblclick="openfolder()" class="draggable" style="left: 200px; top:50px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%"
+        <div id="folder1" ondblclick="openfolder(1)" class="draggable" style="left: 200px; top:50px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%"
             alt=""><input onchange="iconRename()" id="folder1" class="iconName" type="text" value="folder1"></div>
-        <div ondblclick="openfolder()" class="draggable" style="left: 350px; top:50px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%"
-            alt=""><input onchange="iconRename()" id="folder1" class="iconName" type="text" value="folder1"></div>
-        <div ondblclick="openfolder()" class="draggable" style="left: 500px; top:50px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%"
-            alt=""><input onchange="iconRename()" id="folder1" class="iconName" type="text" value="folder1"></div>
-        <div id="contextMenu" class="context-menu" style="display:none">
-          <ul>
-            <li><a onclick="newIcon()" href="#">New icon</a></li>
-          </ul>
-        </div>
+        <div id="folder2" ondblclick="openfolder(2)" class="draggable" style="left: 350px; top:50px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%"
+            alt=""><input onchange="iconRename()" id="folder2" class="iconName" type="text" value="folder2"></div>
+        <div id="folder3" ondblclick="openfolder(3)" class="draggable" style="left: 500px; top:50px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%"
+            alt=""><input onchange="iconRename()" id="folder3" class="iconName" type="text" value="folder3"></div>
+
+            <a id="contextMenu" class="context-menu" style="display:none" onclick="newIcon()" href="#">New icon</a>
         
         <div class="menuClose" id="menuClose">
 
