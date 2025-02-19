@@ -69,7 +69,7 @@ function getLastDraggablePosition() {
     const lastDraggable = draggables[draggables.length - 1];
     return parseInt(lastDraggable.style.left, 10) || 0;
 }
-
+let magas = 50;
 function newIcon() {
     idoz++;
     var table = document.querySelector("#table");
@@ -80,7 +80,16 @@ function newIcon() {
     div.id = "folder" + idoz;
     div.classList.add("draggable");
     const lastPosition = getLastDraggablePosition();
-    div.style = `left:${lastPosition + 150}px;top:50px;z-index:1;`;
+    let lefti = JSON.stringify(lastPosition);
+    console.log(lefti);
+    if(parseInt(lefti) > 2300){
+        magas += 150;
+        div.style = `left:50px;top:${magas}px;z-index:1;`;
+        
+    }
+    else{
+        div.style = `left:${lastPosition + 150}px;top:${magas}px;z-index:1;`;
+    }
     div.ondblclick = openfolder;
 
     img.style = "width:100%;height:100%;";
@@ -163,6 +172,7 @@ async function openfolder() {
             folderitems.children[i].innerText = "Folder item " + i;
             folderitems.classList.add("folder_item");
         }
+        
     }
 
     let mousePosition;
@@ -189,4 +199,52 @@ async function openfolder() {
     folderopened.style.left = mousePosition.clientX;
     icondiv.appendChild(iconimg);
     tray.appendChild(icondiv);
+
+    document.querySelectorAll(".draggable").forEach(draggable => {
+        draggable.addEventListener("mousedown", (event) => {
+            item1 = draggable;
+
+            let shiftX = event.clientX - draggable.getBoundingClientRect().left;
+            let shiftY = event.clientY - draggable.getBoundingClientRect().top;
+
+            const moveAt = (pageX, pageY) => {
+                let newX = pageX - shiftX;
+                let newY = pageY - shiftY;
+
+
+                if (newX < 0) newX = 0;
+                if (newY < 0) newY = 0;
+                if (newX + draggable.offsetWidth > container.offsetWidth) newX = container.offsetWidth - draggable.offsetWidth;
+                if (newY + draggable.offsetHeight > container.offsetHeight) newY = container.offsetHeight - draggable.offsetHeight;
+
+                draggable.style.left = newX + "px";
+                draggable.style.top = newY + "px";
+
+                draggable.style.zIndex = "999";
+
+                // console.log(draggable.id)
+            }
+
+            startPosX = draggable.style.left;
+            startPosY = draggable.style.top;
+
+            const onMouseMove = (event) => {
+                moveAt(event.pageX, event.pageY);
+                checkCollisionOnDrag(draggable); // Check collision while dragging
+            }
+
+            document.addEventListener("mousemove", onMouseMove);
+
+            draggable.addEventListener("mouseup", () => {
+                document.removeEventListener("mousemove", onMouseMove);
+                CheckDelete();
+                CheckCollide();
+                draggable.style.zIndex = "1";
+            });
+
+            draggable.ondragstart = () => {
+                return false;
+            };
+        });
+    });
 }
