@@ -156,10 +156,11 @@ body {
 .context-menu ul li:hover {
   background: darkgray;
 }/*# sourceMappingURL=rakOS.css.map */
+
 .folderopened {
   background-color: rgb(44, 37, 37) !important;
-  width: 30vw !important;
-  height: 60vh !important;
+  width: 600px !important;
+  height: 400px !important;
   position: absolute !important;
   color: white ;
   z-index: 1000;
@@ -180,5 +181,16 @@ body {
 }
 
 .forlder_name{
-  margin-left: 15px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.forlder_name p{
+  padding-left: 15px;
+  margin: 0;
+}
+
+.folderopened hr{
+  margin: 0;
 }
