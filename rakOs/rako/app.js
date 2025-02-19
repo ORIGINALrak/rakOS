@@ -152,9 +152,11 @@ function newIcon() {
 }
 
 async function openfolder() {
-    if (!document.querySelector(".table .folderopened" + this.id)) {
+    console.log(this);
+    if (!document.querySelector(".table .folderopened" + this.item1.id)) {
         var folder = document.createElement("div");
-        folder.id = "folderopened" + this.id;
+        folder.id = "folderopened" +" " + this.item1.id;
+        console.log(folder.id);
         folder.classList.add("folderopened");
         folder.classList.add("draggable");
         table.appendChild(folder);
@@ -194,13 +196,15 @@ async function openfolder() {
     iconimg.src = "src/folder-svgrepo-com.svg";
     iconimg.style = "width:100%;height:100%;background-color:red;";
     icondiv.style = "width:50px;height:50px;";
-    const folderopened = document.getElementById("folderopened" + this.id);
+    const folderopened = document.getElementById("folderopened " + this.item1.id);
+    console.log(folderopened);
     folderopened.style.top = parseInt(mousePosition.clientY.split("px")[0]) + 100 + "px";
     folderopened.style.left = mousePosition.clientX;
     icondiv.appendChild(iconimg);
     tray.appendChild(icondiv);
 
     document.querySelectorAll(".draggable").forEach(draggable => {
+        console.log(draggable);
         draggable.addEventListener("mousedown", (event) => {
             item1 = draggable;
 
