@@ -15,27 +15,33 @@
   </div>
   <section id="body">
       <div class="table" style="position: relative;" id="table">
-        <!-- <div id="folderopened" class="folderopened draggable">
-          <div class="forlder_name">
-          <p>Folder name</p>
+        <div id="folderopened" class="folderopened draggable">
+          <div class="forlder_name" style="background-color: red;">
+            <p style="width: 100%;">Folder name
+              <a style="float: right; padding-left: 10px; padding-right: 10px;"><i class="fa-solid fa-xmark"></i></a>
+              <a style="float: right; padding-left: 10px;"><i class="fa-solid fa-expand"></i></a>
+              <a style="float: right;"><i class="fa-solid fa-minus"></i></a>
+            </p>
           </div>
           <hr>
-          <p class="folder_item">Folder item</p>
-          <p class="folder_item">Folder item</p>
-          <p class="folder_item">Folder item</p>
-          <p class="folder_item">Folder item</p>
-          <p class="folder_item">Folder item</p>
-          <p class="folder_item">Folder item</p>
-          <p class="folder_item">Folder item</p>
-        </div> -->
+            <!-- <p class="folder_item">Folder item</p>
+            <p class="folder_item">Folder item</p>
+            <p class="folder_item">Folder item</p>
+            <p class="folder_item">Folder item</p>
+            <p class="folder_item">Folder item</p>
+            <p class="folder_item">Folder item</p>
+            <p class="folder_item">Folder item</p> -->
+        </div>
         <div  class="draggable"  id="trashcan"><img src="src/trash-can-with-cover-from-side-view.svg"
           width="100%" height="100%" alt=""></div>
         <div id="folder1" ondblclick="openfolder(1)" class="draggable" style="left: 200px; top:50px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%"
             alt=""><input onchange="iconRename()" id="folder1" class="iconName" type="text" value="folder1"></div>
         <div id="folder2" ondblclick="openfolder(2)" class="draggable" style="left: 350px; top:50px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%"
             alt=""><input onchange="iconRename()" id="folder2" class="iconName" type="text" value="folder2"></div>
-        <div id="folder3" ondblclick="openfolder(3)" class="draggable" style="left: 500px; top:50px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%"
-            alt=""><input onchange="iconRename()" id="folder3" class="iconName" type="text" value="folder3"></div>
+        <div id="folder3" ondblclick="openfolder(3)" class="draggable" style="left: 500px; top:50px;">
+          <img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt="">
+          <input onchange="iconRename()" id="folder3" class="iconName" type="text" value="folder3">
+        </div>
 
             <a id="contextMenu" class="context-menu" style="display:none" onclick="newIcon()" href="#">New icon</a>
         
@@ -78,6 +84,7 @@
   <script src="app.js"></script>
   <script src="collision.js"></script>
   <script src="app.js"></script>
+  <script src="https://kit.fontawesome.com/cbddfbce65.js" crossorigin="anonymous"></script>
   <script type="module">
     const container = document.getElementById("table");
     const draggables = document.querySelectorAll(".draggable");
