@@ -224,3 +224,19 @@ function txt() {
     let tableElement = document.getElementById("table");
     tableElement.appendChild(embed);
 }
+function lobster(){
+    let div = document.createElement('div');
+    let table = document.getElementById("table");
+    let img = document.createElement('img');
+    let fejlec = document.createElement('div');
+    fejlec.style = "height:50px;background-color:black";
+    div.draggable = "true";
+    img.src = "src/lobster.png";
+    div.classList.add("draggable");
+    div.style = "width:fit-content;height:fit-content;z-index:1001;";
+    div.appendChild(fejlec);
+    div.appendChild(img);
+    table.appendChild(div);
+    
+    draggable();
+}
