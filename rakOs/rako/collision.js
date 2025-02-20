@@ -71,7 +71,11 @@ function areColliding(div1, div2) {
 }
 
 function checkCollisionOnDrag(draggable) {
-  const elements = document.getElementsByClassName('draggable');
+  if (!draggable.classList.contains("icon")){
+    return
+  }
+
+  const elements = document.getElementsByClassName('icon');
 
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i];

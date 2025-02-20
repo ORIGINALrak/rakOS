@@ -47,12 +47,12 @@ body {
   height: 93vh;
   width: 100vw;
 }
-.table .draggable {
+
+.icon {
   width: 100px;
   height: 100px;
   background-color: transparent;
   position: absolute;
-  cursor: move;
   top: 50px;
   left: 50px;
   align-items: center;
@@ -60,7 +60,8 @@ body {
   user-select: none;
   flex-direction: column;
 }
-.table .draggable input {
+
+.icon input {
   text-align: center;
   width: 100px;
   background-color: transparent;
@@ -157,14 +158,16 @@ body {
   background: darkgray;
 }/*# sourceMappingURL=rakOS.css.map */
 
-.folderopened {
-  background-color: rgb(44, 37, 37) !important;
-  width: 600px !important;
-  height: 400px !important;
-  position: absolute !important;
+.app-background {
+  background-color: rgb(44, 37, 37);
+  background-color: rgb(255, 0, 0);
+  width: 600px;
+  height: 400px;
+  position: absolute;
   color: white ;
   z-index: 1000;
   flex-direction: column;
+  width: 100;
 }
 
 .folder_item{
@@ -180,17 +183,24 @@ body {
   background-color: rgb(83, 83, 214);
 }
 
-.forlder_name{
+.app-background-name{
   height: 40px;
   display: flex;
   align-items: center;
 }
 
-.forlder_name p{
-  padding-left: 15px;
+.app-background-name p{
+  width: 100%;
+  padding: 15px ;
   margin: 0;
 }
 
-.folderopened hr{
+.app-background-name i{
+  margin-left: 10px ;
+  float: right;
+  cursor: pointer;
+}
+
+.app-background hr{
   margin: 0;
 }

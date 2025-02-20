@@ -151,7 +151,7 @@ function newIcon() {
     });
 }
 
-async function openfolder() {
+function openfolder() {
     console.log(this);
     if (!document.querySelector(".table .folderopened" + this.item1.id)) {
         var folder = document.createElement("div");
@@ -202,53 +202,22 @@ async function openfolder() {
     folderopened.style.left = mousePosition.clientX;
     icondiv.appendChild(iconimg);
     tray.appendChild(icondiv);
+}
 
-    document.querySelectorAll(".draggable").forEach(draggable => {
-        console.log(draggable);
-        draggable.addEventListener("mousedown", (event) => {
-            item1 = draggable;
+function CloseWindow(){
+    const window = document.getElementById("app-background")
+    window.remove()
+}
 
-            let shiftX = event.clientX - draggable.getBoundingClientRect().left;
-            let shiftY = event.clientY - draggable.getBoundingClientRect().top;
+function Fullscreen(){
+    const window = document.getElementById("app-background")
+    window.style.width = "100%"
+    window.style.height = "100%"
+    window.style.left = "0"
+    window.style.top = "0"
+}
 
-            const moveAt = (pageX, pageY) => {
-                let newX = pageX - shiftX;
-                let newY = pageY - shiftY;
-
-
-                if (newX < 0) newX = 0;
-                if (newY < 0) newY = 0;
-                if (newX + draggable.offsetWidth > container.offsetWidth) newX = container.offsetWidth - draggable.offsetWidth;
-                if (newY + draggable.offsetHeight > container.offsetHeight) newY = container.offsetHeight - draggable.offsetHeight;
-
-                draggable.style.left = newX + "px";
-                draggable.style.top = newY + "px";
-
-                draggable.style.zIndex = "999";
-
-                // console.log(draggable.id)
-            }
-
-            startPosX = draggable.style.left;
-            startPosY = draggable.style.top;
-
-            const onMouseMove = (event) => {
-                moveAt(event.pageX, event.pageY);
-                checkCollisionOnDrag(draggable); // Check collision while dragging
-            }
-
-            document.addEventListener("mousemove", onMouseMove);
-
-            draggable.addEventListener("mouseup", () => {
-                document.removeEventListener("mousemove", onMouseMove);
-                CheckDelete();
-                CheckCollide();
-                draggable.style.zIndex = "1";
-            });
-
-            draggable.ondragstart = () => {
-                return false;
-            };
-        });
-    });
+function Minimize(){
+    const window = document.getElementById("app-background")
+    window.style.display = "none"
 }

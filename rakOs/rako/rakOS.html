@@ -15,12 +15,12 @@
   </div>
   <section id="body">
       <div class="table" style="position: relative;" id="table">
-        <div id="folderopened" class="folderopened draggable">
-          <div class="forlder_name" style="background-color: red;">
-            <p style="width: 100%;">Folder name
-              <a style="float: right; padding-left: 10px; padding-right: 10px;"><i class="fa-solid fa-xmark"></i></a>
-              <a style="float: right; padding-left: 10px;"><i class="fa-solid fa-expand"></i></a>
-              <a style="float: right;"><i class="fa-solid fa-minus"></i></a>
+        <div id="app-background" class="app-background draggable">
+          <div class="app-background-name" style="background-color: red;">
+            <p>Folder name
+              <i class="fa-solid fa-xmark" onclick="CloseWindow()"></i>
+              <i class="fa-solid fa-expand" onclick="Fullscreen()"></i>
+              <i class="fa-solid fa-minus" onclick="Minimize()"></i>
             </p>
           </div>
           <hr>
@@ -32,13 +32,18 @@
             <p class="folder_item">Folder item</p>
             <p class="folder_item">Folder item</p> -->
         </div>
-        <div  class="draggable"  id="trashcan"><img src="src/trash-can-with-cover-from-side-view.svg"
-          width="100%" height="100%" alt=""></div>
-        <div id="folder1" ondblclick="openfolder(1)" class="draggable" style="left: 200px; top:50px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%"
-            alt=""><input onchange="iconRename()" id="folder1" class="iconName" type="text" value="folder1"></div>
-        <div id="folder2" ondblclick="openfolder(2)" class="draggable" style="left: 350px; top:50px;"><img src="src/folder-svgrepo-com.svg" width="100%" height="100%"
-            alt=""><input onchange="iconRename()" id="folder2" class="iconName" type="text" value="folder2"></div>
-        <div id="folder3" ondblclick="openfolder(3)" class="draggable" style="left: 500px; top:50px;">
+        <div class="draggable icon" id="trashcan">
+          <img src="src/trash-can-with-cover-from-side-view.svg" width="100%" height="100%" alt="">
+        </div>
+        <div id="folder1" ondblclick="openfolder(1)" class="draggable icon" style="left: 200px; top:50px;">
+          <img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt="">
+          <input onchange="iconRename()" id="folder1" class="iconName" type="text" value="folder1">
+        </div>
+        <div id="folder2" ondblclick="openfolder(2)" class="draggable icon" style="left: 350px; top:50px;">
+          <img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt="">
+          <input onchange="iconRename()" id="folder2" class="iconName" type="text" value="folder2">
+        </div>
+        <div id="folder3" ondblclick="openfolder(3)" class="draggable icon" style="left: 500px; top:50px;">
           <img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt="">
           <input onchange="iconRename()" id="folder3" class="iconName" type="text" value="folder3">
         </div>
@@ -85,72 +90,6 @@
   <script src="collision.js"></script>
   <script src="app.js"></script>
   <script src="https://kit.fontawesome.com/cbddfbce65.js" crossorigin="anonymous"></script>
-  <script type="module">
-    const container = document.getElementById("table");
-    const draggables = document.querySelectorAll(".draggable");
-
-    draggables.forEach(draggable => {
-      draggable.addEventListener("mousedown", (event) => {
-        let shiftX = event.clientX - draggable.getBoundingClientRect().left;
-        let shiftY = event.clientY - draggable.getBoundingClientRect().top;
-
-        const moveAt = (pageX, pageY) => {
-          let newX = pageX - shiftX;
-          let newY = pageY - shiftY;
-
-          console.table([newX, newY]);
-
-          // Ensure the draggable stays within the container
-          if (newX < 0) newX = 0;
-          if (newY < 0) newY = 0;
-          if (newX + draggable.offsetWidth > container.offsetWidth) newX = container.offsetWidth - draggable.offsetWidth;
-          if (newY + draggable.offsetHeight > container.offsetHeight) newY = container.offsetHeight - draggable.offsetHeight;
-
-          draggable.style.left = newX + "px";
-          draggable.style.top = newY + "px";
-        }
-
-        const onMouseMove = (event) => {
-          moveAt(event.pageX, event.pageY);
-        }
-
-        document.addEventListener("mousemove", onMouseMove);
-
-        draggable.addEventListener("mouseup", () => {
-          document.removeEventListener("mousemove", onMouseMove);
-        });
-
-        draggable.ondragstart = () => {
-          return false; // Prevent the default drag-and-drop behavior
-        };
-      });
-    });
-
-
-    document.onclick = hideMenu;
-    document.oncontextmenu = rightClick;
-
-    function hideMenu() {
-      document.getElementById(
-        "contextMenu").style.display = "none"
-    }
-
-    function rightClick(e) {
-      e.preventDefault();
-
-      if (document.getElementById(
-        "contextMenu").style.display == "block")
-        hideMenu();
-      else {
-        let menu = document
-          .getElementById("contextMenu")
-
-        menu.style.display = 'block';
-        menu.style.left = e.pageX + "px";
-        menu.style.top = e.pageY + "px";
-      }
-    }
-  </script>
 </body>
 
 </html>
