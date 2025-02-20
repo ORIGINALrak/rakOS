@@ -24,13 +24,6 @@
             </p>
           </div>
           <hr>
-            <!-- <p class="folder_item">Folder item</p>
-            <p class="folder_item">Folder item</p>
-            <p class="folder_item">Folder item</p>
-            <p class="folder_item">Folder item</p>
-            <p class="folder_item">Folder item</p>
-            <p class="folder_item">Folder item</p>
-            <p class="folder_item">Folder item</p> -->
         </div>
         <div class="draggable icon" id="trashcan">
           <img src="src/trash-can-with-cover-from-side-view.svg" width="100%" height="100%" alt="">
@@ -47,11 +40,19 @@
           <img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt="">
           <input onchange="iconRename()" id="folder3" class="iconName" type="text" value="folder3">
         </div>
+        <div class="draggable" style="left: 800px; top:50px;">
+          <img ondblclick="txt()" src="../txt/notepad.png" width="100%" height="100%" alt="asd" >
+          <input onchange="iconRename()" type="text" value="notepad">
+        </div>
+          <a id="contextMenu" class="context-menu" style="display:none" onclick="newIcon()" href="#">New icon</a>
+        <div id="lobster" class="draggable" style="left: 650px;top: 50px;" ondblclick="lobster()">
+          <img id="lobster" src="src/lobster.png" width="100%" height="100%" alt="">
+          <input onchange="iconRename()" id="lobster" class="iconName" type="text" value="lobster">
+        </div>
 
             <a id="contextMenu" class="context-menu" style="display:none" onclick="newIcon()" href="#">New icon</a>
         
         <div class="menuClose" id="menuClose">
-
           <div style="display: flex;align-items: center;flex-direction: column;">
             <button class="turnOff" onclick="turnOff()"><img src="src/tornonsvg.svg" alt=""></button>
             <p id="turnOfflabel" style="display: none;">Kikapcsolás</p>
@@ -60,7 +61,7 @@
             <button class="turnOff" onclick="logout()"><img src="src/tornonsvg.svg" alt=""></button>
             <p id="logoutlabel" style="display: none;">Kijelentkezés</p>
           </div>
-
+          
         </div>
       </div>
       <div class="tray" id="tray">
@@ -88,8 +89,36 @@
   </section>
   <script src="app.js"></script>
   <script src="collision.js"></script>
-  <script src="app.js"></script>
   <script src="https://kit.fontawesome.com/cbddfbce65.js" crossorigin="anonymous"></script>
+  <script type="module">
+
+    const container = document.getElementById("table");
+    const draggables = document.querySelectorAll(".draggable");
+    
+    document.onclick = hideMenu;
+    document.oncontextmenu = rightClick;
+    draggable()
+    function hideMenu() {
+      document.getElementById(
+        "contextMenu").style.display = "none"
+    }
+
+    function rightClick(e) {
+      e.preventDefault();
+
+      if (document.getElementById(
+        "contextMenu").style.display == "block")
+        hideMenu();
+      else {
+        let menu = document
+          .getElementById("contextMenu")
+
+        menu.style.display = 'block';
+        menu.style.left = e.pageX + "px";
+        menu.style.top = e.pageY + "px";
+      }
+    }
+  </script>
 </body>
 
 </html>
