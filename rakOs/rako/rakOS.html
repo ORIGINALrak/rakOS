@@ -15,16 +15,17 @@
   </div>
   <section id="body">
       <div class="table" style="position: relative;" id="table">
-        <div id="app-background" class="app-background draggable">
+        <div id="app-bg-0" class="app-background">
           <div class="app-background-name" style="background-color: red;">
             <p>Folder name
-              <i class="fa-solid fa-xmark" onclick="CloseWindow()"></i>
-              <i class="fa-solid fa-expand" onclick="Fullscreen()"></i>
-              <i class="fa-solid fa-minus" onclick="Minimize()"></i>
+              <i class="fa-solid fa-xmark" onclick="CloseWindow('app-bg-0')"></i>
+              <i class="fa-solid fa-up-right-and-down-left-from-center" onclick="SetSize('app-bg-0'); Fullscreen('app-bg-0')" id="sizeIcon"></i>
+              <i class="fa-solid fa-minus" onclick="Minimize('app-bg-0')"></i>
             </p>
           </div>
           <hr>
         </div>
+
         <div class="draggable icon" id="trashcan">
           <img src="src/trash-can-with-cover-from-side-view.svg" width="100%" height="100%" alt="">
         </div>

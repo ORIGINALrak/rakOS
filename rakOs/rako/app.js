@@ -158,21 +158,54 @@ function openfolder() {
     tray.appendChild(icondiv);
 }
 
-function CloseWindow(){
-    const window = document.getElementById("app-background")
+isMaximized = false
+let prevPosX
+let prevPosY
+let prevSizeWidth
+let prevSizeHeight
+
+function CloseWindow(id){
+    const window = document.getElementById(id)
     window.remove()
 }
 
-function Fullscreen(){
-    const window = document.getElementById("app-background")
-    window.style.width = "100%"
-    window.style.height = "100%"
-    window.style.left = "0"
-    window.style.top = "0"
+function SetSize(id){
+    if (!isMaximized){
+        const window = document.getElementById(id)
+        prevPosX = window.style.left
+        prevPosY = window.style.top
+        prevSizeWidth = window.style.width
+        prevSizeHeight = window.style.height
+        console.log("setting size")
+    }
 }
 
-function Minimize(){
-    const window = document.getElementById("app-background")
+function Fullscreen(id){
+    const window = document.getElementById(id)
+    const icon = document.getElementById("sizeIcon")
+
+    if (!isMaximized){
+        window.style.width = "100%"
+        window.style.height = "100%"
+        window.style.left = "0"
+        window.style.top = "0"
+        icon.classList.remove("fa-up-right-and-down-left-from-center")
+        icon.classList.add("fa-down-left-and-up-right-to-center")
+    }
+    else{
+        window.style.width = prevSizeWidth
+        window.style.height = prevSizeHeight
+        window.style.left = prevPosX
+        window.style.top = prevPosY
+        icon.classList.remove("fa-down-left-and-up-right-to-center")
+        icon.classList.add("fa-up-right-and-down-left-from-center")
+    }
+
+    isMaximized = !isMaximized
+}
+
+function Minimize(id){
+    const window = document.getElementById(id)
     window.style.display = "none"
 
     draggable()
@@ -180,7 +213,6 @@ function Minimize(){
 
 function draggable(){
     document.querySelectorAll(".draggable").forEach(draggable => {
-        console.log(draggable);
         draggable.addEventListener("mousedown", (event) => {
             item1 = draggable;
 
@@ -201,8 +233,6 @@ function draggable(){
                 draggable.style.top = newY + "px";
 
                 draggable.style.zIndex = "999";
-
-                // console.log(draggable.id)
             }
 
             startPosX = draggable.style.left;
@@ -210,7 +240,7 @@ function draggable(){
 
             const onMouseMove = (event) => {
                 moveAt(event.pageX, event.pageY);
-                checkCollisionOnDrag(draggable); // Check collision while dragging
+                checkCollisionOnDrag(draggable);
             }
 
             document.addEventListener("mousemove", onMouseMove);
@@ -258,3 +288,134 @@ function lobster(){
     
     draggable();
 }
+
+
+window.onload = function() {
+    initDragElement();
+    initResizeElement();
+  };
+  
+  function initDragElement() {
+    var pos1 = 0,
+      pos2 = 0,
+      pos3 = 0,
+      pos4 = 0;
+    var popups = document.getElementsByClassName("app-background");
+    var elmnt = null;
+    var currentZIndex = 100; //TODO reset z index when a threshold is passed
+  
+    for (var i = 0; i < popups.length; i++) {
+      var popup = popups[i];
+      var header = getHeader(popup);
+  
+      popup.onmousedown = function() {
+        this.style.zIndex = "" + ++currentZIndex;
+      };
+  
+      if (header) {
+        header.parentPopup = popup;
+        header.onmousedown = dragMouseDown;
+      }
+    }
+  
+    function dragMouseDown(e) {
+      elmnt = this.parentPopup;
+      elmnt.style.zIndex = "" + ++currentZIndex;
+  
+      e = e || window.event;
+      // get the mouse cursor position at startup:
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      document.onmouseup = closeDragElement;
+      // call a function whenever the cursor moves:
+      document.onmousemove = elementDrag;
+    }
+  
+    function elementDrag(e) {
+      if (!elmnt) {
+        return;
+      }
+  
+      e = e || window.event;
+      // calculate the new cursor position:
+      pos1 = pos3 - e.clientX;
+      pos2 = pos4 - e.clientY;
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      // set the element's new position:
+      elmnt.style.top = elmnt.offsetTop - pos2 + "px";
+      elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
+    }
+  
+    function closeDragElement() {
+      /* stop moving when mouse button is released:*/
+      document.onmouseup = null;
+      document.onmousemove = null;
+    }
+  
+    function getHeader(element) {
+      var headerItems = element.getElementsByClassName("app-background-name");
+  
+      if (headerItems.length === 1) {
+        return headerItems[0];
+      }
+  
+      return null;
+    }
+  }
+  
+  function initResizeElement() {
+    var popups = document.getElementsByClassName("app-background");
+    var element = null;
+    var startX, startY, startWidth, startHeight;
+  
+    for (var i = 0; i < popups.length; i++) {
+      var p = popups[i];
+  
+      var right = document.createElement("div");
+      right.className = "resizer-right";
+      p.appendChild(right);
+      right.addEventListener("mousedown", initDrag, false);
+      right.parentPopup = p;
+  
+      var bottom = document.createElement("div");
+      bottom.className = "resizer-bottom";
+      p.appendChild(bottom);
+      bottom.addEventListener("mousedown", initDrag, false);
+      bottom.parentPopup = p;
+  
+      var both = document.createElement("div");
+      both.className = "right-corner";
+      p.appendChild(both);
+      both.addEventListener("mousedown", initDrag, false);
+      both.parentPopup = p;
+    }
+  
+    function initDrag(e) {
+      element = this.parentPopup;
+  
+      startX = e.clientX;
+      startY = e.clientY;
+      startWidth = parseInt(
+        document.defaultView.getComputedStyle(element).width,
+        10
+      );
+      startHeight = parseInt(
+        document.defaultView.getComputedStyle(element).height,
+        10
+      );
+      document.documentElement.addEventListener("mousemove", doDrag, false);
+      document.documentElement.addEventListener("mouseup", stopDrag, false);
+    }
+  
+    function doDrag(e) {
+      element.style.width = startWidth + e.clientX - startX + "px";
+      element.style.height = startHeight + e.clientY - startY + "px";
+    }
+  
+    function stopDrag() {
+      document.documentElement.removeEventListener("mousemove", doDrag, false);
+      document.documentElement.removeEventListener("mouseup", stopDrag, false);
+    }
+  }
+  
