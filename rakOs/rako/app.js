@@ -363,59 +363,104 @@ window.onload = function() {
       return null;
     }
   }
-  
-  function initResizeElement() {
+
+function initResizeElement() {
     var popups = document.getElementsByClassName("app-background");
     var element = null;
-    var startX, startY, startWidth, startHeight;
-  
+    var startX, startY, startWidth, startHeight, startLeft, startTop;
+    var moveHandler = null;
+    var upHandler = null;
+    var minWidth = 250;
+    var minHeight = 150;
+
     for (var i = 0; i < popups.length; i++) {
-      var p = popups[i];
-  
-      var right = document.createElement("div");
-      right.className = "resizer-right";
-      p.appendChild(right);
-      right.addEventListener("mousedown", initDrag, false);
-      right.parentPopup = p;
-  
-      var bottom = document.createElement("div");
-      bottom.className = "resizer-bottom";
-      p.appendChild(bottom);
-      bottom.addEventListener("mousedown", initDrag, false);
-      bottom.parentPopup = p;
-  
-      var both = document.createElement("div");
-      both.className = "right-corner";
-      p.appendChild(both);
-      both.addEventListener("mousedown", initDrag, false);
-      both.parentPopup = p;
+        var p = popups[i];
+
+        createResizer(p, "resizer resizer-left", "left");
+        createResizer(p, "resizer resizer-right", "right");
+        createResizer(p, "resizer resizer-bottom", "bottom");
+        createResizer(p, "resizer resizer-left-corner", "bottom-left");
+        createResizer(p, "resizer resizer-right-corner", "bottom-right");
     }
-  
-    function initDrag(e) {
-      element = this.parentPopup;
-  
-      startX = e.clientX;
-      startY = e.clientY;
-      startWidth = parseInt(
-        document.defaultView.getComputedStyle(element).width,
-        10
-      );
-      startHeight = parseInt(
-        document.defaultView.getComputedStyle(element).height,
-        10
-      );
-      document.documentElement.addEventListener("mousemove", doDrag, false);
-      document.documentElement.addEventListener("mouseup", stopDrag, false);
+
+    function createResizer(popup, className, direction) {
+        var resizer = document.createElement("div");
+        resizer.className = className;
+        popup.appendChild(resizer);
+        resizer.addEventListener("mousedown", initDrag.bind(resizer, direction), false);
+        resizer.parentPopup = popup;
     }
-  
-    function doDrag(e) {
-      element.style.width = startWidth + e.clientX - startX + "px";
-      element.style.height = startHeight + e.clientY - startY + "px";
+
+    function initDrag(direction, e) {
+        element = this.parentPopup;
+
+        startX = e.clientX;
+        startY = e.clientY;
+        startWidth = parseInt(document.defaultView.getComputedStyle(element).width, 10);
+        startHeight = parseInt(document.defaultView.getComputedStyle(element).height, 10);
+        startLeft = parseInt(document.defaultView.getComputedStyle(element).left, 10) || 0;
+        startTop = parseInt(document.defaultView.getComputedStyle(element).top, 10) || 0;
+
+        e.preventDefault();
+
+        moveHandler = function(e) { doDrag(e, direction); };
+        upHandler = stopDrag;
+
+        document.documentElement.addEventListener("mousemove", moveHandler, false);
+        document.documentElement.addEventListener("mouseup", upHandler, false);
     }
-  
+
+    function doDrag(e, direction) {
+        var deltaX = e.clientX - startX;
+        var deltaY = e.clientY - startY;
+        var newWidth, newHeight;
+
+        switch (direction) {
+            case "left":
+                newWidth = startWidth - deltaX;
+                if (newWidth >= minWidth) {
+                    element.style.width = newWidth + "px";
+                    element.style.left = startLeft + deltaX + "px";
+                }
+                break;
+            case "right":
+                newWidth = startWidth + deltaX;
+                if (newWidth >= minWidth) {
+                    element.style.width = newWidth + "px";
+                }
+                break;
+            case "bottom":
+                newHeight = startHeight + deltaY;
+                if (newHeight >= minHeight) {
+                    element.style.height = newHeight + "px";
+                }
+                break;
+            case "bottom-left":
+                newWidth = startWidth - deltaX;
+                newHeight = startHeight + deltaY;
+                if (newWidth >= minWidth) {
+                    element.style.width = newWidth + "px";
+                    element.style.left = startLeft + deltaX + "px";
+                }
+                if (newHeight >= minHeight) {
+                    element.style.height = newHeight + "px";
+                }
+                break;
+            case "bottom-right":
+                newWidth = startWidth + deltaX;
+                newHeight = startHeight + deltaY;
+                if (newWidth >= minWidth) {
+                    element.style.width = newWidth + "px";
+                }
+                if (newHeight >= minHeight) {
+                    element.style.height = newHeight + "px";
+                }
+                break;
+        }
+    }
+
     function stopDrag() {
-      document.documentElement.removeEventListener("mousemove", doDrag, false);
-      document.documentElement.removeEventListener("mouseup", stopDrag, false);
+        document.documentElement.removeEventListener("mousemove", moveHandler, false);
+        document.documentElement.removeEventListener("mouseup", upHandler, false);
     }
-  }
-  
+}
