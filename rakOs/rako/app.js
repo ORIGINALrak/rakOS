@@ -105,57 +105,90 @@ function newIcon() {
     draggable()
 }
 
+function createAppBackground(folderName, id) {
+    const appBg = document.createElement('div');
+    appBg.id = id;
+    appBg.classList.add('app-background');
+  
+    const headerDiv = document.createElement('div');
+    headerDiv.classList.add('app-background-name');
+    headerDiv.style.backgroundColor = 'red';
+  
+    const folderNameParagraph = document.createElement('p');
+    folderNameParagraph.textContent = folderName;
+  
+    const closeButton = document.createElement('i');
+    closeButton.classList.add('fa-solid', 'fa-xmark');
+    closeButton.onclick = function () {
+      CloseWindow(id);
+    };
+  
+    const resizeButton = document.createElement('i');
+    resizeButton.classList.add('fa-solid', 'fa-up-right-and-down-left-from-center');
+    resizeButton.onclick = function () {
+      SetSize(id);
+      Fullscreen(id);
+    };
+    resizeButton.id = 'sizeIcon';
+  
+    const minimizeButton = document.createElement('i');
+    minimizeButton.classList.add('fa-solid', 'fa-minus');
+    minimizeButton.onclick = function () {
+      Minimize(id);
+    };
+  
+    folderNameParagraph.appendChild(closeButton);
+    folderNameParagraph.appendChild(resizeButton);
+    folderNameParagraph.appendChild(minimizeButton);
+  
+    headerDiv.appendChild(folderNameParagraph);
+    appBg.appendChild(headerDiv);
+  
+    const hr = document.createElement('hr');
+    appBg.appendChild(hr);
+  
+    const contentDiv = document.createElement('div');
+    appBg.appendChild(contentDiv);
+  
+    document.querySelector("#table").appendChild(appBg);
+
+    initDragElement();
+    initResizeElement();
+}  
+
 function openfolder() {
     console.log(this);
     if (!document.querySelector(".table .folderopened" + this.item1.id)) {
-        var folder = document.createElement("div");
-        folder.id = "folderopened" +" " + this.item1.id;
-        console.log(folder.id);
-        folder.classList.add("folderopened");
-        folder.classList.add("draggable");
-        table.appendChild(folder);
-        var foldername = document.createElement("div");
-        foldername.id = "foldername";
-        foldername.classList.add("forlder_name");
-        folder.appendChild(foldername);
-        foldername.appendChild(document.createElement("p"));
-        foldername.children[0].innerText = "Folder name";
-        folder.appendChild(document.createElement("hr"));
-        var folderitems = document.createElement("div");
-        folder.appendChild(folderitems);
-        for (let i = 0; i < 5; i++) {
-            folderitems.appendChild(document.createElement("p"));
-            folderitems.children[i].innerText = "Folder item " + i;
-            folderitems.classList.add("folder_item");
-        }
-        
+        let id = this.item1.id + "appBg"
+        let folderName = document.getElementById(this.item1.id + "Value").value
+        createAppBackground(folderName, id)
     }
 
-    let mousePosition;
-    if (this.style != undefined) {
-        mousePosition = {
-            clientX: this.style.left,
-            clientY: this.style.top
-        };
-    } else {
-        mousePosition = {
-            clientX: this.item1.style.left,
-            clientY: this.item1.style.top
-        };
-    }
-    let tray = document.querySelector(".trayIcons");
-    tray.style = "display:flex;flex-direction:row;";
-    let icondiv = document.createElement("div");
-    let iconimg = document.createElement("img");
-    iconimg.src = "src/folder-svgrepo-com.svg";
-    iconimg.style = "width:100%;height:100%;background-color:red;";
-    icondiv.style = "width:50px;height:50px;";
-    const folderopened = document.getElementById("folderopened " + this.item1.id);
-    console.log(folderopened);
-    folderopened.style.top = parseInt(mousePosition.clientY.split("px")[0]) + 100 + "px";
-    folderopened.style.left = mousePosition.clientX;
-    icondiv.appendChild(iconimg);
-    tray.appendChild(icondiv);
+    // let mousePosition;
+    // if (this.style != undefined) {
+    //     mousePosition = {
+    //         clientX: this.style.left,
+    //         clientY: this.style.top
+    //     };
+    // } else {
+    //     mousePosition = {
+    //         clientX: this.item1.style.left,
+    //         clientY: this.item1.style.top
+    //     };
+    // }
+    // let tray = document.querySelector(".trayIcons");
+    // tray.style = "display:flex;flex-direction:row;";
+    // let icondiv = document.createElement("div");
+    // let iconimg = document.createElement("img");
+    // iconimg.src = "src/folder-svgrepo-com.svg";
+    // iconimg.style = "width:100%;height:100%;background-color:red;";
+    // icondiv.style = "width:50px;height:50px;";
+    // const folderopened = document.getElementById("folderopened " + this.item1.id);
+    // console.log(folderopened);
+    // folderopened.style.top = parseInt(mousePosition.clientY.split("px")[0]) + 100 + "px";
+    // folderopened.style.left = mousePosition.clientX;
+    // icondiv.appendChild(iconimg);
+    // tray.appendChild(icondiv);
 }
 
 isMaximized = false
@@ -313,12 +346,6 @@ function lobster() {
     
     draggable();
 }
-
-
-window.onload = function() {
-    initDragElement();
-    initResizeElement();
-  };
   
   function initDragElement() {
     var pos1 = 0,
