@@ -112,7 +112,6 @@ function createAppBackground(folderName, id) {
   
     const headerDiv = document.createElement('div');
     headerDiv.classList.add('app-background-name');
-    headerDiv.style.backgroundColor = 'red';
   
     const folderNameParagraph = document.createElement('p');
     folderNameParagraph.textContent = folderName;
@@ -157,12 +156,12 @@ function createAppBackground(folderName, id) {
 }  
 
 function openfolder() {
+    let id = this.item1.id + "appBg"
+    let folderName = document.getElementById(this.item1.id + "Value").value
+    createAppBackground(folderName, id)
     let abotimeleg = document.querySelector(".table #folderopened" + this.item1.id)
     if (abotimeleg) {
         abotimeleg.style.display = "block";
-        let id = this.item1.id + "appBg"
-        let folderName = document.getElementById(this.item1.id + "Value").value
-        createAppBackground(folderName, id)
     }
     else {
         console.log("Folder not opened");
@@ -244,16 +243,12 @@ function Fullscreen(id) {
     const icon = document.getElementById("sizeIcon")
 
     if (!isMaximized){
-        window.style.width = ""+screen.width+"px"
-        window.style.height = ""+screen.height+"px"
+        window.style.width = "100%"
+        window.style.height = "100%"
         window.style.left = "0"
         window.style.top = "0"
         icon.classList.remove("fa-up-right-and-down-left-from-center")
         icon.classList.add("fa-down-left-and-up-right-to-center")
-        const lob = document.getElementById("Lobsterr");
-        lob.style.width = "1000px";
-        lob.style.height = "500px";
-    
     }
     else {
         window.style.width = prevSizeWidth
