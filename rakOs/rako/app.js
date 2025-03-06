@@ -185,12 +185,16 @@ function Fullscreen(id){
     const icon = document.getElementById("sizeIcon")
 
     if (!isMaximized){
-        window.style.width = "100%"
-        window.style.height = "100%"
+        window.style.width = ""+screen.width+"px"
+        window.style.height = ""+screen.height+"px"
         window.style.left = "0"
         window.style.top = "0"
         icon.classList.remove("fa-up-right-and-down-left-from-center")
         icon.classList.add("fa-down-left-and-up-right-to-center")
+        const lob = document.getElementById("Lobsterr");
+        lob.style.width = "1000px";
+        lob.style.height = "500px";
+    
     }
     else{
         window.style.width = prevSizeWidth
@@ -199,11 +203,12 @@ function Fullscreen(id){
         window.style.top = prevPosY
         icon.classList.remove("fa-down-left-and-up-right-to-center")
         icon.classList.add("fa-up-right-and-down-left-from-center")
+        
     }
 
     isMaximized = !isMaximized
-}
 
+}
 function Minimize(id){
     const window = document.getElementById(id)
     window.style.display = "none"
@@ -272,16 +277,36 @@ function txt() {
     let tableElement = document.getElementById("table");
     tableElement.appendChild(embed);
 }
-function lobster(){
+function lobster() {
     let div = document.createElement('div');
     let table = document.getElementById("table");
     let img = document.createElement('img');
     let fejlec = document.createElement('div');
-    fejlec.style = "height:50px;background-color:black";
+    const p = document.createElement('p');
+    const closeIcon = document.createElement('i');
+    closeIcon.className = 'fa-solid fa-xmark';
+    closeIcon.setAttribute('onclick', "CloseWindow('app-bg-l')");
+    const sizeIcon = document.createElement('i');
+    sizeIcon.id = 'sizeIcon';
+    sizeIcon.className = 'fa-solid fa-up-right-and-down-left-from-center';
+    sizeIcon.setAttribute('onclick', "SetSize('app-bg-l'); Fullscreen('app-bg-l')");
+    const minimizeIcon = document.createElement('i');
+    minimizeIcon.className = 'fa-solid fa-minus';
+    minimizeIcon.setAttribute('onclick', "Minimize('app-bg-l')");
+    
+    p.textContent = 'Lobster';
+    p.appendChild(closeIcon);
+    p.appendChild(sizeIcon);
+    p.appendChild(minimizeIcon);
+    fejlec.style = "height:50px;background-color:black;color:white;";
+    fejlec.appendChild(p);
     div.draggable = "true";
+    img.id="lobsterr";
     img.src = "src/lobster.png";
+    img.style = "width:100%;height:100%;";
     div.classList.add("draggable");
     div.style = "width:fit-content;height:fit-content;z-index:1001;";
+    div.id = "app-bg-l";
     div.appendChild(fejlec);
     div.appendChild(img);
     table.appendChild(div);
