@@ -1,0 +1,181 @@
+body {
+    margin: 0;
+    position: fixed;
+    background-color: blueviolet;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.tray {
+    background-color: rgb(44, 37, 37);
+    width: 100vw;
+    height: 7vh;
+    bottom: 0;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+
+    button {
+        display: flex;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        background-color: rgb(44, 37, 37);
+        border: 0;
+        cursor: pointer;
+
+        table {
+
+            margin: auto;
+            height: 100%;
+            width: 100%;
+
+            td {
+                border: 1px black solid;
+                background-color: rgb(83, 83, 214);
+            }
+        }
+    }
+
+    button:hover {
+
+        background-color: rgb(49, 50, 40);
+    }
+
+    button:active {
+        opacity: 0.8;
+    }
+
+
+}
+
+.table {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    height: 93vh;
+    width: 100vw;
+    .draggable{
+    width: 100px;
+      height: 100px;
+      background-color: transparent;
+      position: absolute;
+      cursor: move;
+      top: 50px;
+      left: 50px;
+      
+      input{
+        text-align: center;
+        width: 100px;
+        background-color: transparent;
+        border: 0;
+
+      }
+    }
+}
+.draggableItems{
+    display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+}
+.trayIcons{
+    padding-left: 40px;
+}    
+
+.menuClose {
+    
+    button {
+        display: none;
+    }
+}
+
+.menuOpen {
+    background-color: rgb(151, 66, 231);
+    grid-row: 4/11;
+    grid-column: 1/4;
+    padding-bottom: 30px;
+    display: flex;
+    align-items: end;
+    justify-content: space-around;
+
+    .turnOff {
+
+        padding: 0;
+        display: block;
+        width: 50px;
+        height: 50px;
+        background-color: rgb(96, 96, 231);
+        cursor: pointer;
+        border-radius: 50px;
+
+        img {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .turnOff:hover {
+        background-color: rgb(100, 98, 250);
+    }
+
+}
+.turnOn{
+    
+    .turnOnbtn {
+        display: none;
+        padding: 0;
+        width: 50px;
+        height: 50px;
+        background-color: white;
+        cursor: pointer;
+        border-radius: 50px;
+    }
+}
+
+@keyframes blink {
+  0%, 100% {background-color:black;}
+  50% {background-color: white;}
+}
+#turnOnbtn {
+  background-color: #8EDDBE;
+  color: white;
+  animation: blink 3s linear infinite;
+}
+.timestamps{
+    padding-right: 50px;
+    margin-left: auto;
+    display: flex;flex-direction: column;
+    color: white;
+    align-items: end;
+}
+
+.context-menu {
+    position: absolute;
+    text-align: center;
+    background: lightgray;
+    border: 1px solid black;
+}
+
+.context-menu ul {
+    padding: 0px;
+    margin: 0px;
+    min-width: 150px;
+    list-style: none;
+}
+
+.context-menu ul li {
+    padding-bottom: 7px;
+    padding-top: 7px;
+    border: 1px solid black;
+}
+
+.context-menu ul li a {
+    text-decoration: none;
+    color: black;
+}
+
+.context-menu ul li:hover {
+    background: darkgray;
+}
