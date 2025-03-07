@@ -172,9 +172,11 @@ body {
   user-select: none;
   border-radius: 8px;
   border: 1px solid black;
+  display: inline-block;
+  overflow: hidden;
 }
 
-.folder_item{
+.folder_item > p{
   margin: 0;
   padding: 5px;
   padding-top: 10px;
@@ -182,6 +184,12 @@ body {
   display: flex;
   top: 0;
   flex-direction: column;
+  
+}
+.folder_item{
+  overflow:auto;
+  max-height: 100%; 
+  max-width: 100%; 
 }
 .folder_item>p:hover{
   background-color: rgb(83, 83, 214);

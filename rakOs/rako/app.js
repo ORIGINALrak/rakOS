@@ -1,4 +1,5 @@
 let idoz = 3;
+let appbg;
 function timeDisplay() {
     const date = new Date();
     const year = date.getFullYear();
@@ -106,7 +107,7 @@ function newIcon() {
 }
 
 function createAppBackground(folderName, id) {
-    const appBg = document.createElement('div');
+    appBg = document.createElement('div');
     appBg.id = id;
     appBg.classList.add('app-background');
   
@@ -156,29 +157,24 @@ function createAppBackground(folderName, id) {
 }  
 
 function openfolder() {
-    let id = this.item1.id + "appBg"
-    let folderName = document.getElementById(this.item1.id + "Value").value
-    createAppBackground(folderName, id)
-    let abotimeleg = document.querySelector(".table #folderopened" + this.item1.id)
-    if (abotimeleg) {
-        abotimeleg.style.display = "block";
+    let folderid = "folderopened" + this.item1.id
+    let existingFolder = document.getElementById(folderid)
+    if (existingFolder != null) {
+        existingFolder.style.display = "block";
     }
     else {
-        console.log("Folder not opened");
-        console.log(folder.id);
+        let id = this.item1.id + "appBg"
+        let folderName = document.getElementById(this.item1.id + "Value").value
+        createAppBackground(folderName, id)
+        var folder = document.createElement("div");
+        // console.log(folder.id);
         folder.classList.add("folderopened");
         folder.classList.add("draggable");
+        folder.id = folderid
         table.appendChild(folder);
-        var foldername = document.createElement("div");
-        foldername.id = "foldername";
-        foldername.classList.add("forlder_name");
-        folder.appendChild(foldername);
-        foldername.appendChild(document.createElement("p"));
-        foldername.children[0].innerText = "Folder name";
-        folder.appendChild(document.createElement("hr"));
         var folderitems = document.createElement("div");
-        folder.appendChild(folderitems);
-        for (let i = 0; i < 5; i++) {
+        appBg.appendChild(folderitems);
+        for (let i = 0; i < 9999; i++) {
             folderitems.appendChild(document.createElement("p"));
             folderitems.children[i].innerText = "Folder item " + i;
             folderitems.classList.add("folder_item");
@@ -203,12 +199,8 @@ function openfolder() {
         iconimg.style = "width:99%;height:99%;background-color:red;";
         icondiv.style = "width:50px;height:50px;padding:1px;";
         icondiv.id = "trayicon" + item1.id;
-        console.log(icondiv.id);
-        console.log("folderopened" + item1.id);
-        // icondiv.onclick = openfolder("folderopened" + item1.id)
-
-        const folderopened = document.getElementById("folderopened" + this.item1.id);
-        console.log(folderopened);
+        icondiv.onclick = () => { openfolder("folderopened" + item1.id) }
+        const folderopened = document.getElementById(folderid);
         folderopened.style.top = parseInt(mousePosition.clientY.split("px")[0]) + 100 + "px";
         folderopened.style.left = mousePosition.clientX;
         icondiv.appendChild(iconimg);
