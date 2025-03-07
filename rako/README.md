@@ -1,2 +1,0 @@
-# rakOS
-Sulis projekt
