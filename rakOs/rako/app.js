@@ -71,7 +71,7 @@ function getLastDraggablePosition() {
     return parseInt(lastDraggable.style.left, 10) || 0;
 }
 let magas = 50;
-function newIcon() {
+function newItem() {
     idoz++;
     var table = document.querySelector("#table");
     let div = document.createElement('div');
@@ -106,7 +106,7 @@ function newIcon() {
     draggable()
 }
 
-function createAppBackground(folderName, id) {
+function createAppBackground(folderName, id, itemId, type) {
     appBg = document.createElement('div');
     appBg.id = id;
     appBg.classList.add('app-background');
@@ -149,6 +149,13 @@ function createAppBackground(folderName, id) {
   
     const contentDiv = document.createElement('div');
     appBg.appendChild(contentDiv);
+
+    if (type == "picture"){
+        contentDiv.classList.add("app-content")
+        var img = document.getElementById(itemId).firstElementChild.cloneNode()
+        contentDiv.appendChild(img)
+        img.classList.add("image-in-folder")
+    }
   
     document.querySelector("#table").appendChild(appBg);
 
@@ -312,6 +319,7 @@ function draggable() {
         draggable.style.zIndex = "1";
     });
 }
+
 function txt() {
     console.log("txt");
     let embed = document.createElement("embed");
@@ -322,42 +330,6 @@ function txt() {
     embed.style.paddingTop = "100px";
     let tableElement = document.getElementById("table");
     tableElement.appendChild(embed);
-}
-function lobster() {
-    let div = document.createElement('div');
-    let table = document.getElementById("table");
-    let img = document.createElement('img');
-    let fejlec = document.createElement('div');
-    const p = document.createElement('p');
-    const closeIcon = document.createElement('i');
-    closeIcon.className = 'fa-solid fa-xmark';
-    closeIcon.setAttribute('onclick', "CloseWindow('app-bg-l')");
-    const sizeIcon = document.createElement('i');
-    sizeIcon.id = 'sizeIcon';
-    sizeIcon.className = 'fa-solid fa-up-right-and-down-left-from-center';
-    sizeIcon.setAttribute('onclick', "SetSize('app-bg-l'); Fullscreen('app-bg-l')");
-    const minimizeIcon = document.createElement('i');
-    minimizeIcon.className = 'fa-solid fa-minus';
-    minimizeIcon.setAttribute('onclick', "Minimize('app-bg-l')");
-    
-    p.textContent = 'Lobster';
-    p.appendChild(closeIcon);
-    p.appendChild(sizeIcon);
-    p.appendChild(minimizeIcon);
-    fejlec.style = "height:50px;background-color:black;color:white;";
-    fejlec.appendChild(p);
-    div.draggable = "true";
-    img.id="lobsterr";
-    img.src = "src/lobster.png";
-    img.style = "width:100%;height:100%;";
-    div.classList.add("draggable");
-    div.style = "width:fit-content;height:fit-content;z-index:1001;";
-    div.id = "app-bg-l";
-    div.appendChild(fejlec);
-    div.appendChild(img);
-    table.appendChild(div);
-
-    draggable();
 }
   
 function initDragElement() {

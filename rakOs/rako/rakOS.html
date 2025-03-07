@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="rakOS.css">
 </head>
 
-
 <body id="fobody" onload="timeDisplay()">
   <div class="turnOn" id="turnOn">
     <button class="turnOnbtn" id="turnOnbtn" onclick="turnOn()">
@@ -36,14 +35,13 @@
           <img ondblclick="txt()" src="../txt/notepad.png" width="100%" height="100%" alt="asd" >
           <input onchange="iconRename()" type="text" value="notepad">
         </div>
-          <a id="contextMenu" class="context-menu" style="display:none" onclick="newIcon()" href="#">New icon</a>
-        <div id="lobster" class="draggable icon" style="left: 650px;top: 50px;" ondblclick="lobster()">
+        <div id="lobster" class="draggable icon" style="left: 650px;top: 50px;" ondblclick="openfolder('picture')">
           <img id="lobster" src="src/lobster.png" width="100%" height="100%" alt="">
-          <input onchange="iconRename()" id="lobster" class="iconName" type="text" value="lobster">
+          <input onchange="iconRename()" id="lobsterValue" class="iconName" type="text" value="lobster">
         </div>
 
-            <a id="contextMenu" class="context-menu" style="display:none" onclick="newIcon()" href="#">New icon</a>
-        
+        <a id="contextMenu" class="context-menu" style="display:none" onclick="newItem()" href="#">New folder</a>
+
         <div class="menuClose" id="menuClose">
           <div style="display: flex;align-items: center;flex-direction: column;">
             <button class="turnOff" onclick="turnOff()"><img src="src/tornonsvg.svg" alt=""></button>
