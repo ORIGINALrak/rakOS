@@ -290,3 +290,13 @@ body {
   object-fit: contain;
   object-position: center;
 }
+
+.aktiv{
+    position: fixed;
+    bottom: 80px;
+    right: 80px;
+}
+.aktiv>p{
+  margin: 0;
+  padding: 0;
+}

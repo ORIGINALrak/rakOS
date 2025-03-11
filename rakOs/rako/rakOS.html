@@ -15,7 +15,10 @@
   </div>
   <section id="body">
       <div class="table" style="position: relative;" id="table">
-
+        <div class="aktiv">
+          <p>ACTIVATE RAKOS</p>
+          <p>GO TO THE SETTING TO ACTIVATE RAKOS</p>
+        </div>
         <div class="draggable icon" id="trashcan">
           <img src="src/trash-can-with-cover-from-side-view.svg" width="100%" height="100%" alt="">
         </div>
@@ -32,7 +35,7 @@
           <input onchange="iconRename()" id="folder3Value" class="iconName" type="text" value="folder3">
         </div>
         <div class="draggable icon" style="left: 800px; top:50px;">
-          <img ondblclick="txt()" src="../txt/notepad.png" width="100%" height="100%" alt="asd" >
+          <img ondblclick="txt()" src="../txt/notepad.png" width="100%" height="100%" alt="asd">
           <input onchange="iconRename()" type="text" value="notepad">
         </div>
         <div id="lobster" class="draggable icon" style="left: 650px;top: 50px;" ondblclick="openfolder('picture')">
@@ -53,6 +56,7 @@
           </div>
           
         </div>
+       
       </div>
       <div class="tray" id="tray">
         <button onclick="menuShow()">

@@ -15,6 +15,8 @@ function filemenutext(){
         fileElement.style.position = "static";
 }
 
+
+
 function notepad() {
     var fileElement = document.getElementById("mentes");
         fileElement.style.display = "flex";
@@ -28,9 +30,15 @@ function notepad() {
         const file = new Blob([content], { type: 'text/plain' });
         link.href = URL.createObjectURL(file);
         var filename = document.getElementById("nev").value;
-        link.download = filename+".txt";
+        link.download = filename + ".txt";
         link.click();
         URL.revokeObjectURL(link.href);
-    }
 
-}
+        }
+    }
+    
+document.getElementById("nev").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        notepad();
+    }
+});

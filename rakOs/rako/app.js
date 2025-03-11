@@ -164,7 +164,7 @@ function createAppBackground(folderName, id, itemId, type) {
 }  
 
 function openfolder() {
-    let folderid = "folderopened" + this.item1.id
+    let folderid = this.item1.id + "appBg"
     let existingFolder = document.getElementById(folderid)
     if (existingFolder != null) {
         existingFolder.style.display = "block";
@@ -173,17 +173,11 @@ function openfolder() {
         let id = this.item1.id + "appBg"
         let folderName = document.getElementById(this.item1.id + "Value").value
         createAppBackground(folderName, id)
-        var folder = document.createElement("div");
-        // console.log(folder.id);
-        folder.classList.add("folderopened");
-        folder.classList.add("draggable");
-        folder.id = folderid
-        table.appendChild(folder);
         var folderitems = document.createElement("div");
         appBg.appendChild(folderitems);
-        for (let i = 0; i < 9999; i++) {
+        for (let i = 1; i < 999; i++) {
             folderitems.appendChild(document.createElement("p"));
-            folderitems.children[i].innerText = "Folder item " + i;
+            folderitems.children[i-1].innerText = "Folder item " + i;
             folderitems.classList.add("folder_item");
         }
         let mousePosition;
@@ -200,16 +194,20 @@ function openfolder() {
         }
         let tray = document.querySelector(".trayIcons");
         tray.style = "display:flex;flex-direction:row;";
-        let icondiv = document.createElement("div");
+
         let iconimg = document.createElement("img");
         iconimg.src = "src/folder-svgrepo-com.svg";
         iconimg.style = "width:99%;height:99%;background-color:red;";
+
+        let icondiv = document.createElement("div");
         icondiv.style = "width:50px;height:50px;padding:1px;";
         icondiv.id = "trayicon" + item1.id;
         icondiv.onclick = () => { openfolder("folderopened" + item1.id) }
-        const folderopened = document.getElementById(folderid);
+
+        const folderopened = document.getElementById(item1.id + "appBg");
         folderopened.style.top = parseInt(mousePosition.clientY.split("px")[0]) + 100 + "px";
         folderopened.style.left = mousePosition.clientX;
+
         icondiv.appendChild(iconimg);
         tray.appendChild(icondiv);
     }
@@ -223,7 +221,9 @@ let prevSizeHeight
 
 function CloseWindow(id) {
     const window = document.getElementById(id)
-    window.remove()
+    window.remove(window.parentNode)
+    const traywindow = document.getElementById("trayicon"+item1.id)
+    traywindow.remove()
 }
 
 function SetSize(id) {
@@ -326,8 +326,9 @@ function txt() {
     embed.type = "text/html";
     embed.src = "../txt/txt.html";
     embed.width = "2000px";
-    embed.height = "1000px";
+    embed.height = "850px";
     embed.style.paddingTop = "100px";
+    embed.style.zIndex = 1000000;
     let tableElement = document.getElementById("table");
     tableElement.appendChild(embed);
 }
