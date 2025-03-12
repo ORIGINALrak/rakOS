@@ -327,3 +327,7 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #202020; 
 }
+
+#iconaktiv{
+  border: pink 1px solid;
+}

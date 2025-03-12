@@ -196,16 +196,25 @@ function openfolder(type) {
                 clientY: this.item1.style.top
             };
         }
+        
         let tray = document.querySelector(".trayIcons");
         tray.style = "display:flex;flex-direction:row;";
-
-        let iconimg = document.createElement("img");
-        iconimg.src = "src/folder-svgrepo-com.svg";
-        iconimg.style = "width:99%;height:99%;background-color:red;";
+        if(type == "folder")
+        {
+            var iconimg = document.createElement("img");
+            iconimg.src = "src/folder-svgrepo-com.svg";
+            iconimg.style = "width:99%;height:99%;background-color:purple;";
+        }
+        if(type == "picture")
+        {
+            var iconimg = document.createElement("img");
+            iconimg.src = "src/img-icon.jpg";
+            iconimg.style = "width:99%;height:99%;";
+        }
 
         let icondiv = document.createElement("div");
-        icondiv.style = "width:50px;height:50px;padding:1px;";
         icondiv.id = "trayicon" + item1.id;
+        icondiv.style = "width:50px;height:50px;padding:1px;";
         icondiv.onclick = () => { openfolder("folderopened" + item1.id) }
 
         const folderopened = document.getElementById(item1.id + "appBg");
@@ -362,7 +371,19 @@ function initDragElement() {
     function dragMouseDown(e) {
         elmnt = this.parentPopup;
         elmnt.style.zIndex = "" + ++currentZIndex;
+        console.log(item1.id)
+        trayborder = document.getElementById("trayicon" + item1.id).style
+        console.log(trayborder)
 
+        const trayIcons = document.querySelectorAll("[id^='trayicon']");
+        trayIcons.forEach(icon => {
+            if (icon.id !== "trayicon" + item1.id) {
+            icon.style.border = "none";
+            }
+        });
+        if (trayborder.border === 'none') {
+            trayborder.border = '1px solid white';
+        }
         e = e || window.event;
         // get the mouse cursor position at startup:
         pos3 = e.clientX;
