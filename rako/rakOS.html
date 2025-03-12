@@ -15,36 +15,44 @@
   </div>
   <section id="body">
       <div class="table" style="position: relative;" id="table">
-        <div class="aktiv">
-          <p>ACTIVATE RAKOS</p>
-          <p>GO TO THE SETTING TO ACTIVATE RAKOS</p>
+        <div id="app-bg-0" class="app-background">
+          <div class="app-background-name" style="background-color: red;">
+            <p>Folder name
+              <i class="fa-solid fa-xmark" onclick="CloseWindow('app-bg-0')"></i>
+              <i class="fa-solid fa-up-right-and-down-left-from-center" onclick="SetSize('app-bg-0'); Fullscreen('app-bg-0')" id="sizeIcon"></i>
+              <i class="fa-solid fa-minus" onclick="Minimize('app-bg-0')"></i>
+            </p>
+          </div>
+          <hr>
         </div>
+
         <div class="draggable icon" id="trashcan">
           <img src="src/trash-can-with-cover-from-side-view.svg" width="100%" height="100%" alt="">
         </div>
-        <div id="folder1" ondblclick="openfolder('folder')" class="draggable icon" style="left: 200px; top:50px;">
+        <div id="folder1" ondblclick="openfolder(1)" class="draggable icon" style="left: 200px; top:50px;">
           <img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt="">
-          <input onchange="iconRename()" id="folder1Value" class="iconName" type="text" value="folder1">
+          <input onchange="iconRename()" id="folder1" class="iconName" type="text" value="folder1">
         </div>
-        <div id="folder2" ondblclick="openfolder('folder')" class="draggable icon" style="left: 350px; top:50px;">
+        <div id="folder2" ondblclick="openfolder(2)" class="draggable icon" style="left: 350px; top:50px;">
           <img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt="">
-          <input onchange="iconRename()" id="folder2Value" class="iconName" type="text" value="folder2">
+          <input onchange="iconRename()" id="folder2" class="iconName" type="text" value="folder2">
         </div>
-        <div id="folder3" ondblclick="openfolder('folder')" class="draggable icon" style="left: 500px; top:50px;">
+        <div id="folder3" ondblclick="openfolder(3)" class="draggable icon" style="left: 500px; top:50px;">
           <img src="src/folder-svgrepo-com.svg" width="100%" height="100%" alt="">
-          <input onchange="iconRename()" id="folder3Value" class="iconName" type="text" value="folder3">
+          <input onchange="iconRename()" id="folder3" class="iconName" type="text" value="folder3">
         </div>
-        <div class="draggable icon" style="left: 650px; top:50px;">
-          <img ondblclick="txt()" src="../txt/notepad.png" width="100%" height="100%" alt="asd">
+        <div class="draggable icon" style="left: 800px; top:50px;">
+          <img ondblclick="txt()" src="../txt/notepad.png" width="100%" height="100%" alt="asd" >
           <input onchange="iconRename()" type="text" value="notepad">
         </div>
-        <div id="lobster" class="draggable icon" style="left: 800px;top: 50px;" ondblclick="openfolder('picture')">
+          <a id="contextMenu" class="context-menu" style="display:none" onclick="newIcon()" href="#">New icon</a>
+        <div id="lobster" class="draggable icon" style="left: 650px;top: 50px;" ondblclick="lobster()">
           <img id="lobster" src="src/lobster.png" width="100%" height="100%" alt="">
-          <input onchange="iconRename()" id="lobsterValue" class="iconName" type="text" value="lobster">
+          <input onchange="iconRename()" id="lobster" class="iconName" type="text" value="lobster">
         </div>
 
-        <a id="contextMenu" class="context-menu" style="display:none" onclick="newItem()" href="#">New folder</a>
-
+            <a id="contextMenu" class="context-menu" style="display:none" onclick="newIcon()" href="#">New icon</a>
+        
         <div class="menuClose" id="menuClose">
           <div style="display: flex;align-items: center;flex-direction: column;">
             <button class="turnOff" onclick="turnOff()"><img src="src/tornonsvg.svg" alt=""></button>
@@ -56,7 +64,6 @@
           </div>
           
         </div>
-       
       </div>
       <div class="tray" id="tray">
         <button onclick="menuShow()">
