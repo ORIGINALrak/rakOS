@@ -110,6 +110,7 @@ function newItem() {
 function createAppBackground(folderName, id, itemId, type) {
     appBg = document.createElement('div');
     appBg.id = id;
+    appBg.style.zIndex = "" + ++currentZIndex;
     appBg.classList.add('app-background');
   
     const headerDiv = document.createElement('div');
@@ -121,7 +122,7 @@ function createAppBackground(folderName, id, itemId, type) {
     const closeButton = document.createElement('i');
     closeButton.classList.add('fa-solid', 'fa-xmark');
     closeButton.onclick = function () {
-      CloseWindow(id);
+      CloseWindow(id, itemId);
     };
   
     const resizeButton = document.createElement('i');
@@ -222,10 +223,10 @@ let prevPosY
 let prevSizeWidth
 let prevSizeHeight
 
-function CloseWindow(id) {
+function CloseWindow(id, itemId) {
     const window = document.getElementById(id)
     window.remove(window.parentNode)
-    const traywindow = document.getElementById("trayicon"+item1.id)
+    const traywindow = document.getElementById("trayicon" + itemId)
     traywindow.remove()
 }
 
