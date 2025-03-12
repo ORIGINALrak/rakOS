@@ -177,6 +177,12 @@ body {
   overflow: hidden;
 }
 
+.folder_item{
+  overflow:auto;
+  max-height: 90%; 
+  max-width: 100%; 
+}
+
 .folder_item > p{
   margin: 0;
   padding: 5px;
@@ -192,6 +198,7 @@ body {
   max-height: 100%; 
   max-width: 100%; 
 }
+
 .folder_item>p:hover{
   background-color: rgb(83, 83, 214);
 }
@@ -218,7 +225,6 @@ body {
 .app-background hr{
   margin: 0;
 }
-
 
 .popup {
   z-index: 9;
@@ -261,7 +267,6 @@ body {
 }
 
 .app-background .resizer-bottom {
-  right: 0;
   cursor: n-resize;
 }
 
@@ -282,7 +287,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f0f0f0; /* Set your background color */
+  background-color: #111;
 }
 
 .image-in-app {
@@ -302,3 +307,23 @@ body {
   padding: 0;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: none; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #111; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #202020; 
+}

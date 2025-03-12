@@ -1,4 +1,5 @@
 let idoz = 3;
+let currentZIndex = 100;
 let appbg;
 function timeDisplay() {
     const date = new Date();
@@ -156,6 +157,14 @@ function createAppBackground(folderName, id, itemId, type) {
         contentDiv.appendChild(img)
         img.classList.add("image-in-folder")
     }
+    else if (type == "folder"){
+        contentDiv.classList.add("folder_item")
+        for (let i = 0; i < 99; i++) {
+            contentDiv.appendChild(document.createElement("p"));
+            contentDiv.children[i].innerText = "Folder item " + i;
+            contentDiv.classList.add("folder_item");
+        }
+    }
   
     document.querySelector("#table").appendChild(appBg);
 
@@ -163,7 +172,7 @@ function createAppBackground(folderName, id, itemId, type) {
     initResizeElement();
 }  
 
-function openfolder() {
+function openfolder(type) {
     let folderid = this.item1.id + "appBg"
     let existingFolder = document.getElementById(folderid)
     if (existingFolder != null) {
@@ -172,14 +181,8 @@ function openfolder() {
     else {
         let id = this.item1.id + "appBg"
         let folderName = document.getElementById(this.item1.id + "Value").value
-        createAppBackground(folderName, id)
-        var folderitems = document.createElement("div");
-        appBg.appendChild(folderitems);
-        for (let i = 1; i < 999; i++) {
-            folderitems.appendChild(document.createElement("p"));
-            folderitems.children[i-1].innerText = "Folder item " + i;
-            folderitems.classList.add("folder_item");
-        }
+        createAppBackground(folderName, id, this.item1.id, type)
+
         let mousePosition;
         if (this.style != undefined) {
             mousePosition = {
@@ -340,7 +343,6 @@ function initDragElement() {
         pos4 = 0;
     var popups = document.getElementsByClassName("app-background");
     var elmnt = null;
-    var currentZIndex = 100; //TODO reset z index when a threshold is passed
 
     for (var i = 0; i < popups.length; i++) {
         var popup = popups[i];
@@ -405,7 +407,7 @@ function initDragElement() {
 function initResizeElement() {
     var popups = document.getElementsByClassName("app-background");
     var element = null;
-    var startX, startY, startWidth, startHeight, startLeft, startTop;
+    var startX, startY, startWidth, startHeight, startLeft;
     var moveHandler = null;
     var upHandler = null;
     var minWidth = 250;
