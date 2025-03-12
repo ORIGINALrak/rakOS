@@ -81,6 +81,7 @@ function newItem() {
 
     div.id = "folder" + idoz;
     div.classList.add("draggable");
+    div.classList.add("icon");
     const lastPosition = getLastDraggablePosition();
     let lefti = JSON.stringify(lastPosition);
     console.log(lefti);
@@ -92,7 +93,7 @@ function newItem() {
     else {
         div.style = `left:${lastPosition + 150}px;top:${magas}px;z-index:1;`;
     }
-    div.ondblclick = openfolder;
+    div.ondblclick = function() { openfolder("folder") };
 
     img.style = "width:100%;height:100%;";
     img.src = "src/folder-svgrepo-com.svg";
@@ -100,6 +101,7 @@ function newItem() {
     input.classList.add("iconName");
     input.value = "folder" + idoz;
     input.onchange = iconRename;
+    input.id = div.id + "Value";
 
     div.appendChild(img);
     div.appendChild(input);
