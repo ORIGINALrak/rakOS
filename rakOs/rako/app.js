@@ -1,4 +1,6 @@
 let idoz = 3;
+let currentZIndex = 100;
+let appbg;
 function timeDisplay() {
     const date = new Date();
     const year = date.getFullYear();
@@ -70,7 +72,7 @@ function getLastDraggablePosition() {
     return parseInt(lastDraggable.style.left, 10) || 0;
 }
 let magas = 50;
-function newIcon() {
+function newItem() {
     idoz++;
     var table = document.querySelector("#table");
     let div = document.createElement('div');
@@ -82,12 +84,12 @@ function newIcon() {
     const lastPosition = getLastDraggablePosition();
     let lefti = JSON.stringify(lastPosition);
     console.log(lefti);
-    if(parseInt(lefti) > 2300){
+    if (parseInt(lefti) > 2300) {
         magas += 150;
         div.style = `left:50px;top:${magas}px;z-index:1;`;
-        
+
     }
-    else{
+    else {
         div.style = `left:${lastPosition + 150}px;top:${magas}px;z-index:1;`;
     }
     div.ondblclick = openfolder;
@@ -105,57 +107,113 @@ function newIcon() {
     draggable()
 }
 
-function openfolder() {
-    console.log(this);
-    if (!document.querySelector(".table .folderopened" + this.item1.id)) {
-        var folder = document.createElement("div");
-        folder.id = "folderopened" +" " + this.item1.id;
-        console.log(folder.id);
-        folder.classList.add("folderopened");
-        folder.classList.add("draggable");
-        table.appendChild(folder);
-        var foldername = document.createElement("div");
-        foldername.id = "foldername";
-        foldername.classList.add("forlder_name");
-        folder.appendChild(foldername);
-        foldername.appendChild(document.createElement("p"));
-        foldername.children[0].innerText = "Folder name";
-        folder.appendChild(document.createElement("hr"));
-        var folderitems = document.createElement("div");
-        folder.appendChild(folderitems);
-        for (let i = 0; i < 5; i++) {
-            folderitems.appendChild(document.createElement("p"));
-            folderitems.children[i].innerText = "Folder item " + i;
-            folderitems.classList.add("folder_item");
-        }
-        
-    }
+function createAppBackground(folderName, id, itemId, type) {
+    appBg = document.createElement('div');
+    appBg.id = id;
+    appBg.classList.add('app-background');
+  
+    const headerDiv = document.createElement('div');
+    headerDiv.classList.add('app-background-name');
+  
+    const folderNameParagraph = document.createElement('p');
+    folderNameParagraph.textContent = folderName;
+  
+    const closeButton = document.createElement('i');
+    closeButton.classList.add('fa-solid', 'fa-xmark');
+    closeButton.onclick = function () {
+      CloseWindow(id);
+    };
+  
+    const resizeButton = document.createElement('i');
+    resizeButton.classList.add('fa-solid', 'fa-up-right-and-down-left-from-center');
+    resizeButton.onclick = function () {
+      SetSize(id);
+      Fullscreen(id);
+    };
+    resizeButton.id = 'sizeIcon';
+  
+    const minimizeButton = document.createElement('i');
+    minimizeButton.classList.add('fa-solid', 'fa-minus');
+    minimizeButton.onclick = function () {
+      Minimize(id);
+    };
+  
+    folderNameParagraph.appendChild(closeButton);
+    folderNameParagraph.appendChild(resizeButton);
+    folderNameParagraph.appendChild(minimizeButton);
+  
+    headerDiv.appendChild(folderNameParagraph);
+    appBg.appendChild(headerDiv);
+  
+    const hr = document.createElement('hr');
+    appBg.appendChild(hr);
+  
+    const contentDiv = document.createElement('div');
+    appBg.appendChild(contentDiv);
 
-    let mousePosition;
-    if (this.style != undefined) {
-        mousePosition = {
-            clientX: this.style.left,
-            clientY: this.style.top
-        };
-    } else {
-        mousePosition = {
-            clientX: this.item1.style.left,
-            clientY: this.item1.style.top
-        };
+    if (type == "picture"){
+        contentDiv.classList.add("app-content")
+        var img = document.getElementById(itemId).firstElementChild.cloneNode()
+        contentDiv.appendChild(img)
+        img.classList.add("image-in-folder")
     }
-    let tray = document.querySelector(".trayIcons");
-    tray.style = "display:flex;flex-direction:row;";
-    let icondiv = document.createElement("div");
-    let iconimg = document.createElement("img");
-    iconimg.src = "src/folder-svgrepo-com.svg";
-    iconimg.style = "width:100%;height:100%;background-color:red;";
-    icondiv.style = "width:50px;height:50px;";
-    const folderopened = document.getElementById("folderopened " + this.item1.id);
-    console.log(folderopened);
-    folderopened.style.top = parseInt(mousePosition.clientY.split("px")[0]) + 100 + "px";
-    folderopened.style.left = mousePosition.clientX;
-    icondiv.appendChild(iconimg);
-    tray.appendChild(icondiv);
+    else if (type == "folder"){
+        contentDiv.classList.add("folder_item")
+        for (let i = 0; i < 99; i++) {
+            contentDiv.appendChild(document.createElement("p"));
+            contentDiv.children[i].innerText = "Folder item " + i;
+            contentDiv.classList.add("folder_item");
+        }
+    }
+  
+    document.querySelector("#table").appendChild(appBg);
+
+    initDragElement();
+    initResizeElement();
+}  
+
+function openfolder(type) {
+    let folderid = this.item1.id + "appBg"
+    let existingFolder = document.getElementById(folderid)
+    if (existingFolder != null) {
+        existingFolder.style.display = "block";
+    }
+    else {
+        let id = this.item1.id + "appBg"
+        let folderName = document.getElementById(this.item1.id + "Value").value
+        createAppBackground(folderName, id, this.item1.id, type)
+
+        let mousePosition;
+        if (this.style != undefined) {
+            mousePosition = {
+                clientX: this.style.left,
+                clientY: this.style.top
+            };
+        } else {
+            mousePosition = {
+                clientX: this.item1.style.left,
+                clientY: this.item1.style.top
+            };
+        }
+        let tray = document.querySelector(".trayIcons");
+        tray.style = "display:flex;flex-direction:row;";
+
+        let iconimg = document.createElement("img");
+        iconimg.src = "src/folder-svgrepo-com.svg";
+        iconimg.style = "width:99%;height:99%;background-color:red;";
+
+        let icondiv = document.createElement("div");
+        icondiv.style = "width:50px;height:50px;padding:1px;";
+        icondiv.id = "trayicon" + item1.id;
+        icondiv.onclick = () => { openfolder("folderopened" + item1.id) }
+
+        const folderopened = document.getElementById(item1.id + "appBg");
+        folderopened.style.top = parseInt(mousePosition.clientY.split("px")[0]) + 100 + "px";
+        folderopened.style.left = mousePosition.clientX;
+
+        icondiv.appendChild(iconimg);
+        tray.appendChild(icondiv);
+    }
 }
 
 isMaximized = false
@@ -164,13 +222,15 @@ let prevPosY
 let prevSizeWidth
 let prevSizeHeight
 
-function CloseWindow(id){
+function CloseWindow(id) {
     const window = document.getElementById(id)
-    window.remove()
+    window.remove(window.parentNode)
+    const traywindow = document.getElementById("trayicon"+item1.id)
+    traywindow.remove()
 }
 
-function SetSize(id){
-    if (!isMaximized){
+function SetSize(id) {
+    if (!isMaximized) {
         const window = document.getElementById(id)
         prevPosX = window.style.left
         prevPosY = window.style.top
@@ -180,23 +240,19 @@ function SetSize(id){
     }
 }
 
-function Fullscreen(id){
+function Fullscreen(id) {
     const window = document.getElementById(id)
     const icon = document.getElementById("sizeIcon")
 
     if (!isMaximized){
-        window.style.width = ""+screen.width+"px"
-        window.style.height = ""+screen.height+"px"
+        window.style.width = "100%"
+        window.style.height = "100%"
         window.style.left = "0"
         window.style.top = "0"
         icon.classList.remove("fa-up-right-and-down-left-from-center")
         icon.classList.add("fa-down-left-and-up-right-to-center")
-        const lob = document.getElementById("Lobsterr");
-        lob.style.width = "1000px";
-        lob.style.height = "500px";
-    
     }
-    else{
+    else {
         window.style.width = prevSizeWidth
         window.style.height = prevSizeHeight
         window.style.left = prevPosX
@@ -216,7 +272,7 @@ function Minimize(id){
     draggable()
 }
 
-function draggable(){
+function draggable() {
     document.querySelectorAll(".draggable").forEach(draggable => {
         draggable.addEventListener("mousedown", (event) => {
             item1 = draggable;
@@ -266,133 +322,92 @@ function draggable(){
         draggable.style.zIndex = "1";
     });
 }
+
 function txt() {
     console.log("txt");
     let embed = document.createElement("embed");
     embed.type = "text/html";
     embed.src = "../txt/txt.html";
     embed.width = "2000px";
-    embed.height = "1000px";
+    embed.height = "850px";
     embed.style.paddingTop = "100px";
+    embed.style.zIndex = 1000000;
     let tableElement = document.getElementById("table");
     tableElement.appendChild(embed);
 }
-function lobster() {
-    let div = document.createElement('div');
-    let table = document.getElementById("table");
-    let img = document.createElement('img');
-    let fejlec = document.createElement('div');
-    const p = document.createElement('p');
-    const closeIcon = document.createElement('i');
-    closeIcon.className = 'fa-solid fa-xmark';
-    closeIcon.setAttribute('onclick', "CloseWindow('app-bg-l')");
-    const sizeIcon = document.createElement('i');
-    sizeIcon.id = 'sizeIcon';
-    sizeIcon.className = 'fa-solid fa-up-right-and-down-left-from-center';
-    sizeIcon.setAttribute('onclick', "SetSize('app-bg-l'); Fullscreen('app-bg-l')");
-    const minimizeIcon = document.createElement('i');
-    minimizeIcon.className = 'fa-solid fa-minus';
-    minimizeIcon.setAttribute('onclick', "Minimize('app-bg-l')");
-    
-    p.textContent = 'Lobster';
-    p.appendChild(closeIcon);
-    p.appendChild(sizeIcon);
-    p.appendChild(minimizeIcon);
-    fejlec.style = "height:50px;background-color:black;color:white;";
-    fejlec.appendChild(p);
-    div.draggable = "true";
-    img.id="lobsterr";
-    img.src = "src/lobster.png";
-    img.style = "width:100%;height:100%;";
-    div.classList.add("draggable");
-    div.style = "width:fit-content;height:fit-content;z-index:1001;";
-    div.id = "app-bg-l";
-    div.appendChild(fejlec);
-    div.appendChild(img);
-    table.appendChild(div);
-    
-    draggable();
-}
-
-
-window.onload = function() {
-    initDragElement();
-    initResizeElement();
-  };
   
-  function initDragElement() {
+function initDragElement() {
     var pos1 = 0,
-      pos2 = 0,
-      pos3 = 0,
-      pos4 = 0;
+        pos2 = 0,
+        pos3 = 0,
+        pos4 = 0;
     var popups = document.getElementsByClassName("app-background");
     var elmnt = null;
-    var currentZIndex = 100; //TODO reset z index when a threshold is passed
-  
+
     for (var i = 0; i < popups.length; i++) {
-      var popup = popups[i];
-      var header = getHeader(popup);
-  
-      popup.onmousedown = function() {
-        this.style.zIndex = "" + ++currentZIndex;
-      };
-  
-      if (header) {
-        header.parentPopup = popup;
-        header.onmousedown = dragMouseDown;
-      }
+        var popup = popups[i];
+        var header = getHeader(popup);
+
+        popup.onmousedown = function () {
+            this.style.zIndex = "" + ++currentZIndex;
+        };
+
+        if (header) {
+            header.parentPopup = popup;
+            header.onmousedown = dragMouseDown;
+        }
     }
-  
+
     function dragMouseDown(e) {
-      elmnt = this.parentPopup;
-      elmnt.style.zIndex = "" + ++currentZIndex;
-  
-      e = e || window.event;
-      // get the mouse cursor position at startup:
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-      document.onmouseup = closeDragElement;
-      // call a function whenever the cursor moves:
-      document.onmousemove = elementDrag;
+        elmnt = this.parentPopup;
+        elmnt.style.zIndex = "" + ++currentZIndex;
+
+        e = e || window.event;
+        // get the mouse cursor position at startup:
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = elementDrag;
     }
-  
+
     function elementDrag(e) {
-      if (!elmnt) {
-        return;
-      }
-  
-      e = e || window.event;
-      // calculate the new cursor position:
-      pos1 = pos3 - e.clientX;
-      pos2 = pos4 - e.clientY;
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-      // set the element's new position:
-      elmnt.style.top = elmnt.offsetTop - pos2 + "px";
-      elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
+        if (!elmnt) {
+            return;
+        }
+
+        e = e || window.event;
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // set the element's new position:
+        elmnt.style.top = elmnt.offsetTop - pos2 + "px";
+        elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
     }
-  
+
     function closeDragElement() {
-      /* stop moving when mouse button is released:*/
-      document.onmouseup = null;
-      document.onmousemove = null;
+        /* stop moving when mouse button is released:*/
+        document.onmouseup = null;
+        document.onmousemove = null;
     }
-  
+
     function getHeader(element) {
-      var headerItems = element.getElementsByClassName("app-background-name");
-  
-      if (headerItems.length === 1) {
-        return headerItems[0];
-      }
-  
-      return null;
+        var headerItems = element.getElementsByClassName("app-background-name");
+
+        if (headerItems.length === 1) {
+            return headerItems[0];
+        }
+
+        return null;
     }
-  }
+}
 
 function initResizeElement() {
     var popups = document.getElementsByClassName("app-background");
     var element = null;
-    var startX, startY, startWidth, startHeight, startLeft, startTop;
+    var startX, startY, startWidth, startHeight, startLeft;
     var moveHandler = null;
     var upHandler = null;
     var minWidth = 250;
@@ -428,7 +443,7 @@ function initResizeElement() {
 
         e.preventDefault();
 
-        moveHandler = function(e) { doDrag(e, direction); };
+        moveHandler = function (e) { doDrag(e, direction); };
         upHandler = stopDrag;
 
         document.documentElement.addEventListener("mousemove", moveHandler, false);

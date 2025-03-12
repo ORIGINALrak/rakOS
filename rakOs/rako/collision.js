@@ -93,9 +93,6 @@ function checkCollisionOnDrag(draggable) {
     deleteItem = false;
     colliding = false;
   }
-
-  console.log(deleteItem);
-  console.log(colliding);
 }
 
 function CheckDelete() {
