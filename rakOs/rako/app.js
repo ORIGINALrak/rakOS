@@ -239,7 +239,7 @@ function openfolder(type) {
         let icondiv = document.createElement("div");
         icondiv.id = "trayicon" + currentItemId;
         icondiv.style = "width:50px;height:50px;padding:1px;";
-        icondiv.onclick = (e) => {console.log(e.target.parentNode.id); openfolder("folderopened" + e.target.parentNode.id) }
+        icondiv.onclick = (e) => {openfolder("folderopened" + e.target.parentNode.id) }
         
         const folderopened = document.getElementById(currentItemId + "appBg");
         if (folderopened) {
@@ -657,7 +657,7 @@ function createNotepad() {
     const textarea = document.createElement('textarea');
     textarea.name = 'textarea';
     textarea.id = 'textarea';
-    textarea.rows = '30';
+    textarea.rows = '15';
     textarea.setAttribute('onclick', 'filemenutext()');
 
     // Create the mentes section (for file name input)

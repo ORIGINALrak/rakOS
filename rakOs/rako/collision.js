@@ -8,7 +8,6 @@ var item1;
 var startPosX;
 var startPosY;
 
-
 draggables.forEach(draggable => {
   draggable.addEventListener("mousedown", (event) => {
     item1 = draggable;
