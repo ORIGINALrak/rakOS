@@ -181,7 +181,16 @@ function createAppBackground(folderName, id, itemId, type) {
 }  
 
 function openfolder(type) {
-    let folderid = this.item1.id + "appBg"
+
+    if(type.includes("folderopened")){
+        currentItemId = type.replace("folderopenedtrayicon", "")
+    } else {
+        var currentItemId = item1.id;
+    }
+
+    let folderid = currentItemId + "appBg"
+    console.log(folderid)
+    console.log(currentItemId)
     let existingFolder = document.getElementById(folderid)
     if (existingFolder != null) {
         existingFolder.style.display = "block";
@@ -218,15 +227,25 @@ function openfolder(type) {
             iconimg.src = "src/img-icon.jpg";
             iconimg.style = "width:99%;height:99%;";
         }
+        if(type == "notepad")
+        {
+            var iconimg = document.createElement("img");
+            iconimg.src = "src/notepad.png";
+            iconimg.style = "width:99%;height:99%;";
+        }
 
+        let currentItemId = item1.id;
+        
         let icondiv = document.createElement("div");
-        icondiv.id = "trayicon" + item1.id;
+        icondiv.id = "trayicon" + currentItemId;
         icondiv.style = "width:50px;height:50px;padding:1px;";
-        icondiv.onclick = () => { openfolder("folderopened" + item1.id) }
-
-        const folderopened = document.getElementById(item1.id + "appBg");
-        folderopened.style.top = parseInt(mousePosition.clientY.split("px")[0]) + 100 + "px";
-        folderopened.style.left = parseInt(mousePosition.clientX.split("px")[0]) / 2 + "px";
+        icondiv.onclick = (e) => {console.log(e.target.parentNode.id); openfolder("folderopened" + e.target.parentNode.id) }
+        
+        const folderopened = document.getElementById(currentItemId + "appBg");
+        if (folderopened) {
+            folderopened.style.top = parseInt(mousePosition.clientY.split("px")[0]) + 100 + "px";
+            folderopened.style.left = parseInt(mousePosition.clientX.split("px")[0]) / 2 + "px";
+        }
 
         icondiv.appendChild(iconimg);
         tray.appendChild(icondiv);
