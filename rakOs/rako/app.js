@@ -373,19 +373,22 @@ function initDragElement() {
     function dragMouseDown(e) {
         elmnt = this.parentPopup;
         elmnt.style.zIndex = "" + ++currentZIndex;
-        console.log(item1.id)
-        trayborder = document.getElementById("trayicon" + item1.id).style
-        console.log(trayborder)
+        console.log(elmnt.id);
+
+        let folderId = elmnt.id.replace("appBg", "");
+        let trayborder = document.getElementById("trayicon" + folderId);
+        console.log(trayborder);
 
         const trayIcons = document.querySelectorAll("[id^='trayicon']");
-        trayIcons.forEach(icon => {
-            if (icon.id !== "trayicon" + item1.id) {
-            icon.style.border = "none";
+        trayIcons.forEach(trayIcon => {
+            trayIcon.style.border = "none";
+        });
+
+        trayIcons.forEach(trayIcon => {
+            if (trayIcon.id === "trayicon" + folderId) {
+            trayIcon.style.border = '1px solid white';
             }
         });
-        if (trayborder.border === 'none') {
-            trayborder.border = '1px solid white';
-        }
         e = e || window.event;
         // get the mouse cursor position at startup:
         pos3 = e.clientX;
