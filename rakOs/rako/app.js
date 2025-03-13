@@ -162,11 +162,16 @@ function createAppBackground(folderName, id, itemId, type) {
     }
     else if (type == "folder"){
         contentDiv.classList.add("folder_item")
-        for (let i = 0; i < 99; i++) {
-            contentDiv.appendChild(document.createElement("p"));
-            contentDiv.children[i].innerText = "Folder item " + i;
+        for (let i = 1; i < 99; i++) {
+            var children = document.createElement("p")
+            children.innerText = "Folder item " + i;
+            contentDiv.appendChild(children);
             contentDiv.classList.add("folder_item");
         }
+    }
+    else if (type == "notepad"){
+        var notepadDiv = createNotepad()
+        contentDiv.appendChild(notepadDiv);
     }
   
     document.querySelector("#table").appendChild(appBg);
@@ -221,7 +226,7 @@ function openfolder(type) {
 
         const folderopened = document.getElementById(item1.id + "appBg");
         folderopened.style.top = parseInt(mousePosition.clientY.split("px")[0]) + 100 + "px";
-        folderopened.style.left = mousePosition.clientX;
+        folderopened.style.left = parseInt(mousePosition.clientX.split("px")[0]) / 2 + "px";
 
         icondiv.appendChild(iconimg);
         tray.appendChild(icondiv);
@@ -530,4 +535,140 @@ function initResizeElement() {
         document.documentElement.removeEventListener("mousemove", moveHandler, false);
         document.documentElement.removeEventListener("mouseup", upHandler, false);
     }
+}
+
+function filemenu() {
+    var fileElement = document.getElementById("file");
+    if (fileElement.style.display === "block") {
+        fileElement.style.display = "none";
+        fileElement.style.position = "static";
+    } else {
+        fileElement.style.display = "block";
+        fileElement.style.position = "absolute";
+    }
+}
+
+function filemenutext(){
+    var fileElement = document.getElementById("file");
+        fileElement.style.display = "none";
+        fileElement.style.position = "static";
+}
+
+function notepad() {
+    var fileElement = document.getElementById("mentes");
+        fileElement.style.display = "flex";
+
+    if(document.getElementById("nev").value != ""){      
+        const link = document.createElement("a");
+        const content = document.querySelector("textarea").value;
+        const file = new Blob([content], { type: 'text/plain' });
+        link.href = URL.createObjectURL(file);
+        var filename = document.getElementById("nev").value;
+        link.download = filename + ".txt";
+        link.click();
+        URL.revokeObjectURL(link.href);
+    }
+}
+    
+function createNotepad() {
+    // Create the main notepad div
+    const notepadDiv = document.createElement('div');
+    notepadDiv.classList.add('notepad');
+
+    // Create the "Névtelen - Jegyzettömb" header section
+    const headerP = document.createElement('p');
+    headerP.classList.add('neve');
+
+    const headerImg = document.createElement('img');
+    headerImg.src = 'src/notepad.png';
+    headerImg.alt = 'no';
+    headerImg.classList.add('notepad_img');
+    
+    const headerText = document.createTextNode('Névtelen - Jegyzettömb');
+    headerP.appendChild(headerImg);
+    headerP.appendChild(headerText);
+
+    // Create the top button bar with "Fájl" and "Szerkesztés" buttons
+    const sorDiv = document.createElement('div');
+    sorDiv.classList.add('sor');
+
+    const fileButtonP = document.createElement('p');
+    const fileButton = document.createElement('button');
+    fileButton.classList.add('notepad_button');
+    fileButton.setAttribute('onclick', 'filemenu()');
+    fileButton.textContent = 'Fájl';
+    fileButtonP.appendChild(fileButton);
+    sorDiv.appendChild(fileButtonP);
+
+    const editButtonP = document.createElement('p');
+    const editButton = document.createElement('button');
+    editButton.classList.add('notepad_button');
+    editButton.textContent = 'Szerkesztés';
+    editButtonP.appendChild(editButton);
+    sorDiv.appendChild(editButtonP);
+
+    const editDiv = document.createElement('div');
+    editDiv.id = 'edit';
+    editDiv.classList.add('edit');
+    sorDiv.appendChild(editDiv);
+
+    // Create the file options section (Új fájl, Mentés)
+    const fileDiv = document.createElement('div');
+    fileDiv.id = 'file';
+    fileDiv.classList.add('file');
+
+    const newFileButtonP = document.createElement('p');
+    const newFileButton = document.createElement('button');
+    newFileButton.type = 'button';
+    newFileButton.classList.add('notepad_button');
+    newFileButton.textContent = 'Új fájl';
+    newFileButtonP.appendChild(newFileButton);
+    fileDiv.appendChild(newFileButtonP);
+
+    const saveButtonP = document.createElement('p');
+    const saveButton = document.createElement('button');
+    saveButton.type = 'button';
+    saveButton.classList.add('notepad_button');
+    saveButton.setAttribute('onclick', 'notepad()');
+    saveButton.textContent = 'Mentés';
+    saveButtonP.appendChild(saveButton);
+    fileDiv.appendChild(saveButtonP);
+
+    // Create the textarea element
+    const textarea = document.createElement('textarea');
+    textarea.name = 'textarea';
+    textarea.id = 'textarea';
+    textarea.rows = '30';
+    textarea.setAttribute('onclick', 'filemenutext()');
+
+    // Create the mentes section (for file name input)
+    const mentesDiv = document.createElement('div');
+    mentesDiv.id = 'mentes';
+    mentesDiv.classList.add('mentes');
+
+    const mentesText = document.createElement('p');
+    mentesText.textContent = 'Milyen néven szeretné letölteni a filet?';
+    mentesDiv.appendChild(mentesText);
+
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.name = 'nev';
+    nameInput.id = 'nev';
+    mentesDiv.appendChild(nameInput);
+
+    // Append all elements to the notepadDiv
+    notepadDiv.appendChild(headerP);
+    notepadDiv.appendChild(sorDiv);
+    notepadDiv.appendChild(fileDiv);
+    notepadDiv.appendChild(textarea);
+    notepadDiv.appendChild(mentesDiv);
+
+    // Add event listener to the 'nev' input field for 'Enter' key press
+    nameInput.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            notepad(); // Call the notepad() function when Enter is pressed
+        }
+    });
+
+    return notepadDiv
 }
