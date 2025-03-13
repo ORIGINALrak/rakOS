@@ -1,6 +1,8 @@
-let idoz = 3;
+let folderIdCounter = 4;
+let imageIdCounter = 1;
+let notepadIdCounter = 1;
 let currentZIndex = 100;
-let appbg;
+let appBg;
 function timeDisplay() {
     const date = new Date();
     const year = date.getFullYear();
@@ -66,40 +68,62 @@ function iconRename() {
 function getLastDraggablePosition() {
     const draggables = document.querySelectorAll(".draggable");
     if (draggables.length === 0) {
-        return 0; // Default position if no draggable elements exist
+        return 0;
     }
     const lastDraggable = draggables[draggables.length - 1];
     return parseInt(lastDraggable.style.left, 10) || 0;
 }
 let magas = 50;
-function newItem() {
-    idoz++;
+function newItem(type) {
     var table = document.querySelector("#table");
     let div = document.createElement('div');
     let img = document.createElement('img');
     let input = document.createElement('input');
 
-    div.id = "folder" + idoz;
     div.classList.add("draggable");
     div.classList.add("icon");
+
+    img.style = "width:100%;height:100%;";
+    input.classList.add("iconName");
+
     const lastPosition = getLastDraggablePosition();
     let lefti = JSON.stringify(lastPosition);
     console.log(lefti);
-    if (parseInt(lefti) > 2300) {
+    console.log(window.innerWidth);
+    if (parseInt(lefti) > window.innerWidth - 250) {
         magas += 150;
         div.style = `left:50px;top:${magas}px;z-index:1;`;
-
     }
     else {
         div.style = `left:${lastPosition + 150}px;top:${magas}px;z-index:1;`;
     }
-    div.ondblclick = function() { openfolder("folder") };
 
-    img.style = "width:100%;height:100%;";
-    img.src = "src/folder-svgrepo-com.svg";
+    switch (type){
+        case "folder":
+            div.id = "folder" + folderIdCounter;
+            div.ondblclick = function() { openfolder("folder") };
+            img.src = "src/folder-svgrepo-com.svg";
+            input.value = div.id;
+            folderIdCounter++;
+            break
 
-    input.classList.add("iconName");
-    input.value = "folder" + idoz;
+        case "image":
+            div.id = "image" + imageIdCounter;
+            div.ondblclick = function() { openfolder("picture") };
+            img.src = "src/lobster.png";
+            input.value = div.id;
+            imageIdCounter++;
+            break
+
+        case "notepad":
+            div.id = "notepad" + notepadIdCounter;
+            div.ondblclick = function() { openfolder("notepad") };
+            img.src = "src/notepad.png";
+            input.value = div.id;
+            notepadIdCounter++;
+            break
+    }
+    
     input.onchange = iconRename;
     input.id = div.id + "Value";
 
@@ -107,6 +131,21 @@ function newItem() {
     div.appendChild(input);
     table.appendChild(div);
     draggable()
+}
+
+function activate(){
+    document.getElementById("activate-text").style.display = "none"
+    document.getElementById("activate").style.display = "none"
+
+    const div = document.getElementById('activateDiv');
+
+    div.classList.toggle('visible');
+            
+    if (div.classList.contains('visible')) {
+        setTimeout(() => {
+            div.classList.remove('visible');
+        }, 2000);
+    }
 }
 
 function createAppBackground(folderName, id, itemId, type) {
@@ -170,7 +209,7 @@ function createAppBackground(folderName, id, itemId, type) {
         }
     }
     else if (type == "notepad"){
-        var notepadDiv = createNotepad()
+        var notepadDiv = createNotepad(itemId)
         contentDiv.appendChild(notepadDiv);
     }
   
@@ -657,7 +696,7 @@ function createNotepad() {
     const textarea = document.createElement('textarea');
     textarea.name = 'textarea';
     textarea.id = 'textarea';
-    textarea.rows = '15';
+    textarea.rows = '14';
     textarea.setAttribute('onclick', 'filemenutext()');
 
     // Create the mentes section (for file name input)
@@ -676,7 +715,6 @@ function createNotepad() {
     mentesDiv.appendChild(nameInput);
 
     // Append all elements to the notepadDiv
-    notepadDiv.appendChild(headerP);
     notepadDiv.appendChild(sorDiv);
     notepadDiv.appendChild(fileDiv);
     notepadDiv.appendChild(textarea);

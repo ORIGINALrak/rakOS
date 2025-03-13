@@ -147,22 +147,27 @@ body {
 }
 
 .context-menu-holder{
-  
+  display: none;
+  justify-content: center;
+  align-items: stretch;
+  flex-direction: column;
+  z-index: 100000;
+  position: absolute;
 }
 
 .context-menu {
-  position: absolute;
   text-align: center;
-  background: lightgray;
+  background: rgb(255, 249, 244);
   border: 1px solid black;
   text-decoration: none;
   color: black;
-  padding: 15px;
+  font-size: 15px;
+  padding: 10px;
 }
 
-.context-menu ul li:hover {
-  background: darkgray;
-}/*# sourceMappingURL=rakOS.css.map */
+.context-menu:hover {
+  background: rgb(255, 243, 210);
+}
 
 .app-background {
   background-color: rgb(58, 49, 66);
@@ -182,7 +187,7 @@ body {
 
 .folder_item{
   overflow:auto;
-  max-height: 90%; 
+  height: 94%; 
   max-width: 100%; 
 }
 
@@ -391,6 +396,7 @@ img {
 }
 
 textarea{
+  position: absolute;
   width: 100%;
   height: 100%;
   border: none;
@@ -440,4 +446,20 @@ textarea:focus{
 
 .mentes>p{
   padding-left: 1px;
+}
+
+.activateDiv{
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 2s, visibility 0s 2s; 
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 2s;
+}
+
+.keppp{
+  max-width: 100vw;
 }
