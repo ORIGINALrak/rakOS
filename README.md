@@ -20,6 +20,7 @@ Ez után átkerülünk a rakos.html-re, ahol kezdődik a program
 A felület egy windows szerüen kinéző felület
 
 Funkciói
+
 lehet mappát megnyitni, amibe előre beállított placeholderek vannak
 lehet képet megnyitni
 lehet notepad-et megnyitni, amiből lehet menteni, és letölti mint txt, a bele írt dolgokat
@@ -35,3 +36,7 @@ lehet a megnyitott programokat:
 
 minden megnyitott ikon megjelenik a tálcán, és ha rányomsz, akkor megnyitja őket
 (majdnem) mindig mutatja, hogy mi van aktuálisan a fókuszban
+
+írja, hogy mennyi az idő
+ki lehet kapcsolni
+ki lehet jelentkezni
