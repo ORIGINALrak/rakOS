@@ -685,7 +685,6 @@ function createNotepad() {
     const textarea = document.createElement('textarea');
     textarea.name = 'textarea';
     textarea.id = 'textarea';
-    textarea.rows = '14';
     textarea.setAttribute('onclick', 'filemenutext()');
 
     // Create the mentes section (for file name input)
@@ -736,3 +735,13 @@ function focus(id){
         }
     });
 }
+
+function forceReload() {
+    location.reload();
+}
+
+function setNewBG() {
+    const imageURL = "https://picsum.photos/1920/1080?" + new Date().getTime();
+    document.body.style.backgroundImage = `url(${imageURL})`;
+}
+  
