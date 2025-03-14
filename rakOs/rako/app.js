@@ -258,19 +258,19 @@ function openfolder(type) {
         {
             var iconimg = document.createElement("img");
             iconimg.src = "src/folder-svgrepo-com.svg";
-            iconimg.style = "width:99%;height:99%;background-color:purple;";
+            iconimg.style = "width:100%;height:100%;background-color:purple;";
         }
         if(type == "picture")
         {
             var iconimg = document.createElement("img");
             iconimg.src = "src/img-icon.jpg";
-            iconimg.style = "width:99%;height:99%;";
+            iconimg.style = "width:100%;height:100%;";
         }
         if(type == "notepad")
         {
             var iconimg = document.createElement("img");
             iconimg.src = "src/notepad.png";
-            iconimg.style = "width:99%;height:99%;";
+            iconimg.style = "width:100%;height:100%;";
         }
         
         let currentItemId = item1.id;
