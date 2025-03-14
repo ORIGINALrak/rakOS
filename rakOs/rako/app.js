@@ -153,7 +153,7 @@ function createAppBackground(folderName, id, itemId, type) {
     appBg.id = id;
     appBg.style.zIndex = "" + ++currentZIndex;
     appBg.classList.add('app-background');
-  
+    
     const headerDiv = document.createElement('div');
     headerDiv.classList.add('app-background-name');
   
@@ -212,7 +212,7 @@ function createAppBackground(folderName, id, itemId, type) {
         var notepadDiv = createNotepad(itemId)
         contentDiv.appendChild(notepadDiv);
     }
-  
+    
     document.querySelector("#table").appendChild(appBg);
 
     initDragElement();
@@ -272,7 +272,7 @@ function openfolder(type) {
             iconimg.src = "src/notepad.png";
             iconimg.style = "width:99%;height:99%;";
         }
-
+        
         let currentItemId = item1.id;
         
         let icondiv = document.createElement("div");
@@ -288,6 +288,10 @@ function openfolder(type) {
 
         icondiv.appendChild(iconimg);
         tray.appendChild(icondiv);
+        focus(id);
+        appBg.onclick = function() {
+            focus(id);
+        };
     }
 }
 
@@ -436,22 +440,7 @@ function initDragElement() {
     function dragMouseDown(e) {
         elmnt = this.parentPopup;
         elmnt.style.zIndex = "" + ++currentZIndex;
-        console.log(elmnt.id);
-
-        let folderId = elmnt.id.replace("appBg", "");
-        let trayborder = document.getElementById("trayicon" + folderId);
-        console.log(trayborder);
-
-        const trayIcons = document.querySelectorAll("[id^='trayicon']");
-        trayIcons.forEach(trayIcon => {
-            trayIcon.style.border = "none";
-        });
-
-        trayIcons.forEach(trayIcon => {
-            if (trayIcon.id === "trayicon" + folderId) {
-            trayIcon.style.border = '1px solid white';
-            }
-        });
+        focus(elmnt.id);
         e = e || window.event;
         // get the mouse cursor position at startup:
         pos3 = e.clientX;
@@ -728,4 +717,22 @@ function createNotepad() {
     });
 
     return notepadDiv
+}
+
+function focus(id){
+    let folderId = id.replace("appBg", "");
+    console.log(folderId);
+    let trayborder = document.getElementById("trayicon" + folderId);
+    console.log(trayborder);
+
+    const trayIcons = document.querySelectorAll("[id^='trayicon']");
+    trayIcons.forEach(trayIcon => {
+        trayIcon.style.border = "none";
+    });
+
+    trayIcons.forEach(trayIcon => {
+        if (trayIcon.id === "trayicon" + folderId) {
+        trayIcon.style.border = '1px solid white';
+        }
+    });
 }
