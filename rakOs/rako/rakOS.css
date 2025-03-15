@@ -1,4 +1,6 @@
-
+* {
+  user-select: none;
+}
 
 body {
   background-image: url("");
@@ -71,11 +73,17 @@ body {
   flex-direction: column;
 }
 
-.icon input {
+.iconName {
   text-align: center;
   width: 100px;
   background-color: transparent;
   border: 0;
+  color: #fff;
+  text-shadow:
+  -0.7px -0.7px 0 #000,
+  0.7px -0.7px 0 #000,
+  -0.7px 0.7px 0 #000,
+  0.7px 0.7px 0 #000;  
 }
 
 .draggableItems {

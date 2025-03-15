@@ -101,15 +101,15 @@ function newItem(type) {
     switch (type){
         case "folder":
             div.id = "folder" + folderIdCounter;
-            div.ondblclick = function() { openfolder("folder") };
-            img.src = "src/folder-svgrepo-com.svg";
+            img.ondblclick = function() { openfolder("folder") };
+            img.src = "src/folder.svg";
             input.value = div.id;
             folderIdCounter++;
             break
 
         case "image":
             div.id = "image" + imageIdCounter;
-            div.ondblclick = function() { openfolder("picture") };
+            img.ondblclick = function() { openfolder("picture") };
             img.src = "src/lobster.png";
             input.value = div.id;
             imageIdCounter++;
@@ -117,7 +117,7 @@ function newItem(type) {
 
         case "notepad":
             div.id = "notepad" + notepadIdCounter;
-            div.ondblclick = function() { openfolder("notepad") };
+            img.ondblclick = function() { openfolder("notepad") };
             img.src = "src/notepad.png";
             input.value = div.id;
             notepadIdCounter++;
@@ -126,11 +126,23 @@ function newItem(type) {
     
     input.onchange = iconRename;
     input.id = div.id + "Value";
-
+    
     div.appendChild(img);
     div.appendChild(input);
     table.appendChild(div);
     draggable()
+    deselectRename()
+}
+
+function deselectRename(){
+    var inputs = document.getElementsByClassName("iconName")
+
+    Array.from(inputs).forEach(input => {
+        input.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                this.blur();
+        }});
+    });
 }
 
 function activate(){
